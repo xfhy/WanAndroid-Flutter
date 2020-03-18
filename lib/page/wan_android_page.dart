@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:wanandroidflutter/constant/AppColors.dart';
+import 'package:wanandroidflutter/page/tree_page.dart';
+
+import 'home_list_page.dart';
+import 'myinfo_page.dart';
 
 class WanAndroidApp extends StatefulWidget {
   //一般是需要下划线开头,然后后面加一个State
@@ -43,15 +47,9 @@ class _WanAndroidAppState extends State<WanAndroidApp> {
           //PageView类似于Android中的ViewPager
           child: PageView(
             children: <Widget>[
-              Container(
-                color: Colors.deepOrange,
-              ),
-              Container(
-                color: Colors.yellow,
-              ),
-              Container(
-                color: Colors.blue,
-              ),
+              HomeListPage(),
+              TreePage(),
+              MyInfoPage(),
             ],
             //设置controller,可以控制PageView的当前页
             controller: _pageController,
@@ -70,16 +68,16 @@ class _WanAndroidAppState extends State<WanAndroidApp> {
         BottomNavigationBar(
           items: [
             BottomNavigationBarItem(
-              icon: Icon(Icons.toys),
-              title: Text('toys'),
+              icon: Icon(Icons.home),
+              title: Text(appBarTitles[0]),
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.tap_and_play),
-              title: Text("play"),
+              icon: Icon(Icons.widgets),
+              title: Text(appBarTitles[1]),
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.landscape),
-              title: Text("landscape"),
+              icon: Icon(Icons.person),
+              title: Text(appBarTitles[2]),
             ),
           ],
           onTap: (page) {
