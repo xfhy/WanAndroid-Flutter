@@ -17,6 +17,12 @@ environment:
   sdk: ">=2.1.0 <3.0.0"
 
 dependencies:
+  # 网络请求
+  dio: ^3.0.9
+  # cookie管理
+  dio_cookie_manager: 1.0.0
+  # path_provider负责插桩iOS/Android的目录文件,IO模块负责对文件进行读写
+  path_provider: ^1.6.5
   flutter:
     sdk: flutter
 
