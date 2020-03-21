@@ -64,6 +64,7 @@ class _HomeBannerState extends State<HomeBanner> {
             onPageChanged: _onPageChanged,
             children: _buildItems(),
           ),
+          _buildIndicator(),
         ],
       ),
     );
@@ -149,6 +150,30 @@ class _HomeBannerState extends State<HomeBanner> {
           ),
         ),
       ),
+    );
+  }
+
+  ///banner底部小圆点
+  _buildIndicator() {
+    List<Widget> indicators = [];
+
+    for (int i = 0; i < widget.bannerList.length; i++) {
+      indicators.add(Container(
+        width: 6.0,
+        height: 6.0,
+        margin: EdgeInsets.symmetric(horizontal: 2.5, vertical: 10.0),
+        //修饰
+        decoration: BoxDecoration(
+            //shape
+            shape: BoxShape.circle,
+            color: i == virtualIndex ? Colors.white : Colors.grey),
+      ));
+    }
+    //小圆点  放成一行,放中间
+    return Row(
+      //主轴
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: indicators,
     );
   }
 }
