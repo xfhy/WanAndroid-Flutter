@@ -58,13 +58,24 @@ class _HomeBannerState extends State<HomeBanner> {
         alignment: Alignment.bottomCenter,
         children: <Widget>[
           //一个类似ViewPager的PageView+小圆点+右上角索引
+          //1. PageView
           PageView(
             controller: _pageController,
             //当从一个page滑动到另一个page的时候会回调
             onPageChanged: _onPageChanged,
             children: _buildItems(),
           ),
+
+          //2. 小圆点
           _buildIndicator(),
+
+          //3. 定位
+          Positioned(
+            top: 0.0,
+            right: 0.0,
+            child: _numberIndicator(
+                context, virtualIndex, widget.bannerList.length),
+          ),
         ],
       ),
     );
@@ -174,6 +185,27 @@ class _HomeBannerState extends State<HomeBanner> {
       //主轴
       mainAxisAlignment: MainAxisAlignment.center,
       children: indicators,
+    );
+  }
+
+  //构建右上角的角标
+  _numberIndicator(BuildContext context, int index, int itemCount) {
+    //展示: 1/4  这种效果
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.black45,
+        borderRadius: BorderRadius.circular(20.0),
+      ),
+      margin: EdgeInsets.only(top: 10.0, right: 5.0),
+      padding: EdgeInsets.symmetric(horizontal: 6.0, vertical: 2.0),
+      child: Text(
+        "${++index}/${itemCount}",
+        style: TextStyle(
+          color: Colors.white70,
+          fontSize: 12.0,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
     );
   }
 }
