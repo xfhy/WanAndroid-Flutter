@@ -47,13 +47,13 @@ class LogUtil {
 
   static void _log(String msg) {
     print("$_startLine");
-    _logEmptyLine();
+    //_logEmptyLine();
     if (msg.length < _limitLength) {
       print(msg);
     } else {
       segmentationLog(msg);
     }
-    _logEmptyLine();
+    //_logEmptyLine();
     print("$_endLine");
   }
 

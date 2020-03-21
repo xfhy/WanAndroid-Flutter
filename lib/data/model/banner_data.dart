@@ -22,7 +22,33 @@ class BannerData {
   int type;
   String url;
 
-  BannerData(this.desc, this.id, this.imagePath, this.isVisible, this.order,
-      this.title, this.type, this.url);
+  BannerData(
+      {this.desc,
+      this.id,
+      this.imagePath,
+      this.isVisible,
+      this.order,
+      this.title,
+      this.type,
+      this.url});
+
+  ///入参是待解析的json map
+  factory BannerData.fromJson(Map<String, dynamic> parsedJson) {
+    return BannerData(
+      desc: parsedJson['desc'],
+      id: parsedJson['id'],
+      imagePath: parsedJson['imagePath'],
+      isVisible: parsedJson['isVisible'],
+      order: parsedJson['order'],
+      title: parsedJson['title'],
+      type: parsedJson['type'],
+      url: parsedJson['url'],
+    );
+  }
+
+  @override
+  String toString() {
+    return 'BannerData{desc: $desc, id: $id, imagePath: $imagePath, isVisible: $isVisible, order: $order, title: $title, type: $type, url: $url}';
+  }
 
 }

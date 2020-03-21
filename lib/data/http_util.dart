@@ -5,6 +5,7 @@ import 'package:dio/dio.dart';
 import 'package:dio_cookie_manager/dio_cookie_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:wanandroidflutter/constant/api.dart';
 import 'package:wanandroidflutter/util/log_util.dart';
 
 /*
@@ -16,8 +17,27 @@ import 'package:wanandroidflutter/util/log_util.dart';
 }
 * */
 
+HttpUtils httpUtils = HttpUtils();
+
 ///http请求封装
 class HttpUtils {
+  HttpUtils._internal() {
+    if (null == _dio) {
+      _dio = Dio();
+      //dio 也是单例,设置baseUrl等一些配置
+      _dio.options.baseUrl = Api.BASE_URL;
+      _dio.options.connectTimeout = 30 * 1000;
+      _dio.options.sendTimeout = 30 * 1000;
+      _dio.options.receiveTimeout = 30 * 1000;
+    }
+  }
+
+  static HttpUtils _singleton = HttpUtils._internal();
+
+  factory HttpUtils() => _singleton;
+
+  Dio _dio;
+
   Future get(String url,
       {Map<String, dynamic> params, BuildContext buildContext}) async {
     Response response;
@@ -29,19 +49,17 @@ class HttpUtils {
     var dir = Directory("$documentsPath/cookies");
     await dir.create();
 
-    LogUtil.d("文档目录path = ${documentsPath}");
-
-    Dio dio = Dio();
+    //LogUtil.d("文档目录path = ${documentsPath}");
 
     //添加cookie
-    dio.interceptors.add(
+    _dio.interceptors.add(
         CookieManager(PersistCookieJar(dir: dir.path, ignoreExpires: true)));
 
     try {
       if (params != null) {
-        response = await dio.get(url, queryParameters: params);
+        response = await _dio.get(url, queryParameters: params);
       } else {
-        response = await dio.get(url);
+        response = await _dio.get(url);
       }
 
       if (response.data['errorCode'] == 0) {

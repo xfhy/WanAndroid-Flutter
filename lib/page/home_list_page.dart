@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:wanandroidflutter/constant/api.dart';
+import 'package:wanandroidflutter/data/data_utils.dart';
 import 'package:wanandroidflutter/data/http_util.dart';
 import 'package:wanandroidflutter/util/log_util.dart';
 
@@ -18,12 +19,17 @@ class _HomeListPageState extends State<HomeListPage> {
         child: RaisedButton(
           child: Text('请求网络'),
           onPressed: () {
-            var httpUtils = HttpUtils();
+            /*var httpUtils = HttpUtils();
             httpUtils
                 .get(Api.BASE_URL + Api.ARTICLE_LIST + "0/json")
                 .then((value) {
               LogUtil.d(value.toString());
+            });*/
+            LogUtil.d("请求之前");
+            dataUtils.getBannerData().then((bannerDataList) {
+              LogUtil.d(bannerDataList.toString());
             });
+            LogUtil.d("请求之后");
           },
         ),
       ),
