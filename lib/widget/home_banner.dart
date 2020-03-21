@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:wanandroidflutter/data/data_utils.dart';
 import 'package:wanandroidflutter/data/model/banner_data.dart';
 import 'package:wanandroidflutter/util/log_util.dart';
+import 'package:wanandroidflutter/util/tool_utils.dart';
 
 ///首页的banner
 ///2020年03月21日21:08:20
@@ -110,8 +111,44 @@ class _HomeBannerState extends State<HomeBanner> {
 
   ///构建某一个item
   Widget _buildBannerItem(BannerData bannerData) {
-    return Center(
-      child: Text(bannerData.toString()),
+    return Stack(
+      //未定位widget占满Stack整个空间
+      fit: StackFit.expand,
+      children: <Widget>[
+        //banner图片
+        Image.network(
+          bannerData.imagePath,
+          fit: BoxFit.cover,
+        ),
+        _buildItemTitle(bannerData.title),
+      ],
+    );
+  }
+
+  ///构建banner中的标题和背景
+  _buildItemTitle(String title) {
+    return Container(
+      //整个banner的渐变色
+      decoration: BoxDecoration(
+          gradient: LinearGradient(
+        begin: Alignment.bottomCenter,
+        end: const Alignment(0.0, -0.8),
+        colors: [const Color(0xa0000000), Colors.transparent],
+      )),
+      //标题对齐方式
+      alignment: Alignment.bottomCenter,
+      child: Container(
+        //底部标题的margin
+        margin: EdgeInsets.symmetric(vertical: 22.0, horizontal: 16.0),
+        //标题
+        child: Text(
+          ToolUtils.signToStr(title),
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 18.0,
+          ),
+        ),
+      ),
     );
   }
 }
