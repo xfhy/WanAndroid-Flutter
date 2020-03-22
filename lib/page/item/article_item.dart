@@ -36,10 +36,12 @@ class _ArticleItemState extends State<ArticleItem> {
             ),
 
 
-            //右边
+            //右边   写成三行,标题+tag+底部那些信息   用好看的那个wanandroid的布局
             Column(
               children: <Widget>[
                 Text(widget.itemData.title),
+                //构建中间的tag
+                _buildMiddleTags(),
               ],
             ),
           ],
@@ -56,5 +58,16 @@ class _ArticleItemState extends State<ArticleItem> {
         title: widget.itemData.title,
         url: widget.itemData.link);
     Navigator.pushNamed(context, Routes.webViewPage, arguments: pageData);
+  }
+
+  //构建中间的tag
+  _buildMiddleTags() {
+    //widget.itemData.tags
+    //tag
+    return Row(
+      children: <Widget>[
+
+      ],
+    );
   }
 }

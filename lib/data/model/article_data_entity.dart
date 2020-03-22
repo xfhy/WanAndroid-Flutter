@@ -38,7 +38,7 @@ class ArticleData with JsonConvert<ArticleData> {
   String shareUser;
   int superChapterId;
   String superChapterName;
-  List<dynamic> tags;
+  List<ArticleTags> tags;
   String title;
   int type;
   int userId;
@@ -47,5 +47,9 @@ class ArticleData with JsonConvert<ArticleData> {
 
   ///我添加的 是否为置顶的数据
   bool isTop;
+}
 
+class ArticleTags with JsonConvert<ArticleTags> {
+  String name;
+  String url;
 }

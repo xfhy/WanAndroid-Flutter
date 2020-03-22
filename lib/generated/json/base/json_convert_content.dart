@@ -21,6 +21,8 @@ class JsonConvert<T> {
         return articleDataEntityFromJson(data as ArticleDataEntity, json) as T;
       case ArticleData:
         return articleDataDataFromJson(data as ArticleData, json) as T;
+      case ArticleTags:
+        return articleTagsFromJson(data as ArticleTags, json) as T;
     }
     return data as T;
   }
