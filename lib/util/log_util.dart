@@ -3,7 +3,7 @@ import 'package:flutter/cupertino.dart';
 ///日志打印
 ///可以动态生产环境和开发环境,且长度不限
 class LogUtil {
-  static var _separator = "=";
+  static var _separator = "-";
   static var _split =
       "$_separator$_separator$_separator$_separator$_separator$_separator$_separator$_separator$_separator";
   static var _title = "xfhy-Log";
