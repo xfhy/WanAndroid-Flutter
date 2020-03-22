@@ -5,9 +5,9 @@ articleDataEntityFromJson(ArticleDataEntity data, Map<String, dynamic> json) {
 		data.curPage = json['curPage']?.toInt();
 	}
 	if (json['datas'] != null) {
-		data.datas = new List<ArticleDataData>();
+		data.datas = new List<ArticleData>();
 		(json['datas'] as List).forEach((v) {
-			data.datas.add(new ArticleDataData().fromJson(v));
+			data.datas.add(new ArticleData().fromJson(v));
 		});
 	}
 	if (json['offset'] != null) {
@@ -42,7 +42,7 @@ Map<String, dynamic> articleDataEntityToJson(ArticleDataEntity entity) {
 	return data;
 }
 
-articleDataDataFromJson(ArticleDataData data, Map<String, dynamic> json) {
+articleDataDataFromJson(ArticleData data, Map<String, dynamic> json) {
 	if (json['apkLink'] != null) {
 		data.apkLink = json['apkLink']?.toString();
 	}
@@ -140,7 +140,7 @@ articleDataDataFromJson(ArticleDataData data, Map<String, dynamic> json) {
 	return data;
 }
 
-Map<String, dynamic> articleDataDataToJson(ArticleDataData entity) {
+Map<String, dynamic> articleDataDataToJson(ArticleData entity) {
 	final Map<String, dynamic> data = new Map<String, dynamic>();
 	data['apkLink'] = entity.apkLink;
 	data['audit'] = entity.audit;

@@ -19,8 +19,8 @@ class JsonConvert<T> {
     switch (type) {
       case ArticleDataEntity:
         return articleDataEntityFromJson(data as ArticleDataEntity, json) as T;
-      case ArticleDataData:
-        return articleDataDataFromJson(data as ArticleDataData, json) as T;
+      case ArticleData:
+        return articleDataDataFromJson(data as ArticleData, json) as T;
     }
     return data as T;
   }
@@ -29,8 +29,8 @@ class JsonConvert<T> {
     switch (type) {
       case ArticleDataEntity:
         return articleDataEntityToJson(data as ArticleDataEntity);
-      case ArticleDataData:
-        return articleDataDataToJson(data as ArticleDataData);
+      case ArticleData:
+        return articleDataDataToJson(data as ArticleData);
     }
     return data as T;
   }
@@ -41,7 +41,7 @@ class JsonConvert<T> {
       case 'ArticleDataEntity':
         return ArticleDataEntity().fromJson(json);
       case 'ArticleDataData':
-        return ArticleDataData().fromJson(json);
+        return ArticleData().fromJson(json);
     }
     return null;
   }
@@ -52,7 +52,7 @@ class JsonConvert<T> {
       case 'ArticleDataEntity':
         return List<ArticleDataEntity>();
       case 'ArticleDataData':
-        return List<ArticleDataData>();
+        return List<ArticleData>();
     }
     return null;
   }

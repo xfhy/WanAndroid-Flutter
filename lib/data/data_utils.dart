@@ -1,6 +1,7 @@
 import 'package:wanandroidflutter/constant/api.dart';
 import 'package:wanandroidflutter/data/http_util.dart';
 import 'package:wanandroidflutter/data/model/banner_data.dart';
+import 'package:wanandroidflutter/util/log_util.dart';
 
 import 'model/article_data_entity.dart';
 
@@ -25,6 +26,7 @@ class DataUtils {
 
   ///首页数据模块
   //获取首页banner数据
+  //在Future一个函数内,加了async的,会同步执行的.先等前面的执行完再执行后面的.
   Future<List<BannerData>> getBannerData() async {
     //首先从服务端获取最外层的json数据的data
     List datas = await httpUtils.get(Api.BANNER);
@@ -34,10 +36,15 @@ class DataUtils {
 
   ///首页数据模块
   //获取首页最新文章数据
-  Future<ArticleDataEntity> getArticleData() async {
+  Future<ArticleDataEntity> getArticleData(int pageIndex) async {
     //首先从服务端获取最外层的json数据的data
-    var datas = await httpUtils.get(Api.ARTICLE_LIST + "0/json");
-    var result = ArticleDataEntity().fromJson(datas);
-    return result;
+    var datas = await httpUtils.get(Api.ARTICLE_LIST + "$pageIndex/json");
+    return ArticleDataEntity().fromJson(datas);
+  }
+
+  ///获取首页置顶文章数据
+  Future<List<ArticleData>> getTopArticleData() async {
+    List datas = await httpUtils.get(Api.ARTICLE_TO_LIST);
+    return datas.map((item) => ArticleData().fromJson(item)).toList();
   }
 }

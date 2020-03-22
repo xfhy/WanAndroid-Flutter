@@ -4,7 +4,7 @@ import 'package:wanandroidflutter/generated/json/base/json_convert_content.dart'
 ///mixin 混入 可以重复代码,这里ArticleDataEntity可以有JsonConvert种的方法
 class ArticleDataEntity with JsonConvert<ArticleDataEntity> {
   int curPage;
-  List<ArticleDataData> datas;
+  List<ArticleData> datas;
   int offset;
   bool over;
   int pageCount;
@@ -12,7 +12,7 @@ class ArticleDataEntity with JsonConvert<ArticleDataEntity> {
   int total;
 }
 
-class ArticleDataData with JsonConvert<ArticleDataData> {
+class ArticleData with JsonConvert<ArticleData> {
   String apkLink;
   int audit;
   String author;
