@@ -192,6 +192,7 @@ class _HomeBannerState extends State<HomeBanner> {
   _numberIndicator(BuildContext context, int index, int itemCount) {
     //展示: 1/4  这种效果
     return Container(
+      //一般用于背景的效果
       decoration: BoxDecoration(
         color: Colors.black45,
         borderRadius: BorderRadius.circular(20.0),

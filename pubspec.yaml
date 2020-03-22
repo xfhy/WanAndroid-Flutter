@@ -23,6 +23,8 @@ dependencies:
   dio_cookie_manager: 1.0.0
   # path_provider负责插桩iOS/Android的目录文件,IO模块负责对文件进行读写
   path_provider: ^1.6.5
+  # 包装了与原生WebView通信的WebView
+  flutter_webview_plugin: ^0.3.10+1
   flutter:
     sdk: flutter
 
