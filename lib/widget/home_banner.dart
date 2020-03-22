@@ -1,8 +1,9 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:wanandroidflutter/data/data_utils.dart';
+import 'package:wanandroidflutter/constant/routes.dart';
 import 'package:wanandroidflutter/data/model/banner_data.dart';
+import 'package:wanandroidflutter/page/args/route_web_page_data.dart';
 import 'package:wanandroidflutter/util/log_util.dart';
 import 'package:wanandroidflutter/util/tool_utils.dart';
 
@@ -123,17 +124,23 @@ class _HomeBannerState extends State<HomeBanner> {
 
   ///构建某一个item
   Widget _buildBannerItem(BannerData bannerData) {
-    return Stack(
-      //未定位widget占满Stack整个空间
-      fit: StackFit.expand,
-      children: <Widget>[
-        //banner图片
-        Image.network(
-          bannerData.imagePath,
-          fit: BoxFit.cover,
-        ),
-        _buildItemTitle(bannerData.title),
-      ],
+    //用GestureDetector包装一下,才能设置点击事件
+    return GestureDetector(
+      onTap: () {
+        _onClickBanner(bannerData);
+      },
+      child: Stack(
+        //未定位widget占满Stack整个空间
+        fit: StackFit.expand,
+        children: <Widget>[
+          //banner图片
+          Image.network(
+            bannerData.imagePath,
+            fit: BoxFit.cover,
+          ),
+          _buildItemTitle(bannerData.title),
+        ],
+      ),
     );
   }
 
@@ -208,5 +215,12 @@ class _HomeBannerState extends State<HomeBanner> {
         ),
       ),
     );
+  }
+
+  ///banner item 点击事件
+  void _onClickBanner(BannerData bannerData) {
+    RouteWebPageData pageData = new RouteWebPageData(
+        id: bannerData.id, title: bannerData.title, url: bannerData.url);
+    Navigator.pushNamed(context, Routes.webViewPage, arguments: pageData);
   }
 }

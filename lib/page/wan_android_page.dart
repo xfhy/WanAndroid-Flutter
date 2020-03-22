@@ -1,11 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:wanandroidflutter/constant/AppColors.dart';
+import 'package:wanandroidflutter/constant/routes.dart';
 import 'package:wanandroidflutter/page/tree_page.dart';
 
 import 'home_list_page.dart';
 import 'myinfo_page.dart';
 
+///主页面
+
 class WanAndroidApp extends StatefulWidget {
+
+  WanAndroidApp() {
+    //初始化路由
+    Routes.init();
+  }
+
   //一般是需要下划线开头,然后后面加一个State
   @override
   State createState() => _WanAndroidAppState();
@@ -27,6 +36,7 @@ class _WanAndroidAppState extends State<WanAndroidApp> {
     return MaterialApp(
       theme: ThemeData(
           primaryColor: AppColors.colorPrimary, accentColor: Colors.blue),
+      routes: Routes.routes,
       home: Scaffold(
         appBar: AppBar(
           title: Text(
