@@ -77,7 +77,6 @@ class _HomeListPageState extends State<HomeListPage> {
       for (var value in listData) {
         if (value is List<ArticleData>) {
           //标记 置顶的数据
-          value.forEach((item) => item.isTop = true);
           articleDataList.addAll(value);
         } else if (value is ArticleDataEntity) {
           articleDataList.addAll(value.datas);

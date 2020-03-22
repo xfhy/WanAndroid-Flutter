@@ -31,7 +31,7 @@ class _HomeBannerState extends State<HomeBanner> {
   @override
   void initState() {
     super.initState();
-    LogUtil.d('initState');
+//    LogUtil.d('initState');
     _pageController = PageController(initialPage: _realIndex);
     //周期性的计时
     _timer = Timer.periodic(Duration(seconds: 5), (timer) {

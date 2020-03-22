@@ -40,13 +40,11 @@ class ArticleData with JsonConvert<ArticleData> {
   String superChapterName;
   List<ArticleTags> tags;
   String title;
+  ///type=1 是置顶数据
   int type;
   int userId;
   int visible;
   int zan;
-
-  ///我添加的 是否为置顶的数据
-  bool isTop;
 }
 
 class ArticleTags with JsonConvert<ArticleTags> {

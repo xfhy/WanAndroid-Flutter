@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:wanandroidflutter/constant/routes.dart';
 import 'package:wanandroidflutter/data/model/article_data_entity.dart';
 import 'package:wanandroidflutter/page/args/route_web_page_data.dart';
+import 'package:wanandroidflutter/util/tool_utils.dart';
 
 ///2020年03月22日22:01:38
 ///文章的item
@@ -21,6 +22,32 @@ class ArticleItem extends StatefulWidget {
 class _ArticleItemState extends State<ArticleItem> {
   @override
   Widget build(BuildContext context) {
+    List<Widget> rightWidgetList = [];
+
+    rightWidgetList.add(
+      Text(
+        ToolUtils.signToStr(widget.itemData.title),
+        style: TextStyle(
+          color: Colors.black,
+          fontSize: 15.0,
+          fontWeight: FontWeight.bold,
+        ),
+        //只展示一行
+        maxLines: 1,
+        //超出一行 显示...
+        overflow: TextOverflow.ellipsis,
+      ),
+    );
+
+    //构建中间的tag
+    var tagsList = _buildMiddleTags();
+    if (tagsList != null) {
+      rightWidgetList.add(tagsList);
+    }
+
+    //底部的作者 时间 等信息
+    rightWidgetList.add(_buildBottomInfo());
+
     return Card(
       elevation: 4.0,
       margin: EdgeInsets.symmetric(horizontal: 8.0, vertical: 6.0),
@@ -35,14 +62,12 @@ class _ArticleItemState extends State<ArticleItem> {
               ),
             ),
 
-
             //右边   写成三行,标题+tag+底部那些信息   用好看的那个wanandroid的布局
-            Column(
-              children: <Widget>[
-                Text(widget.itemData.title),
-                //构建中间的tag
-                _buildMiddleTags(),
-              ],
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: rightWidgetList,
+              ),
             ),
           ],
         ),
@@ -62,12 +87,43 @@ class _ArticleItemState extends State<ArticleItem> {
 
   //构建中间的tag
   _buildMiddleTags() {
-    //widget.itemData.tags
-    //tag
-    return Row(
-      children: <Widget>[
+    List<Widget> tagsList = [];
+    //加入置顶标签
+    if (1 == widget.itemData.type) {
+      tagsList.add(ToolUtils.buildStrokeTagWidget('置顶', Colors.redAccent));
+    }
+    //加入 新 标签
+    if (widget.itemData.fresh) {
+      tagsList.add(ToolUtils.buildStrokeTagWidget('新', Colors.redAccent));
+    }
+    //加入 tag 标签
+    if (widget.itemData.tags.length > 0) {
+      tagsList.addAll(widget.itemData.tags
+          .map(
+              (item) => ToolUtils.buildStrokeTagWidget(item.name, Colors.green))
+          .toList());
+    }
+    if (tagsList.length > 0) {
+      return Container(
+        margin: EdgeInsets.symmetric(vertical: 3.0, horizontal: 0.0),
+        child: Row(
+          children: tagsList,
+        ),
+      );
+    } else {
+      return null;
+    }
+  }
 
-      ],
+  Widget _buildBottomInfo() {
+    List<Widget> infoList = [];
+    var itemData = widget.itemData;
+    infoList.add(Icon(
+      itemData.author == "" ? Icons.folder_shared : Icons.person,
+      size: 20.0,
+    ));
+    return Row(
+      children: infoList,
     );
   }
 }
