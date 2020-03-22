@@ -1,7 +1,8 @@
 import 'package:wanandroidflutter/constant/api.dart';
 import 'package:wanandroidflutter/data/http_util.dart';
 import 'package:wanandroidflutter/data/model/banner_data.dart';
-import 'package:wanandroidflutter/util/log_util.dart';
+
+import 'model/article_data_entity.dart';
 
 ///数据获取帮助类
 ///2020年03月21日15:16:55
@@ -28,6 +29,15 @@ class DataUtils {
     //首先从服务端获取最外层的json数据的data
     List datas = await httpUtils.get(Api.BANNER);
     //然后将data(list)解析成一个一个的BannerData对象,然后组装成list
-    return datas.map((item)=>BannerData.fromJson(item)).toList();
+    return datas.map((item) => BannerData.fromJson(item)).toList();
+  }
+
+  ///首页数据模块
+  //获取首页最新文章数据
+  Future<ArticleDataEntity> getArticleData() async {
+    //首先从服务端获取最外层的json数据的data
+    var datas = await httpUtils.get(Api.ARTICLE_LIST + "0/json");
+    var result = ArticleDataEntity().fromJson(datas);
+    return result;
   }
 }

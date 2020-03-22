@@ -12,7 +12,6 @@ import 'package:wanandroidflutter/util/tool_utils.dart';
 ///xfhy
 
 class HomeBanner extends StatefulWidget {
-  //TODO 点击事件
   final List<BannerData> bannerList;
 
   HomeBanner(this.bannerList, {Key key}) : super(key: key);
