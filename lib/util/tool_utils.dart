@@ -54,4 +54,16 @@ class ToolUtils {
       ),
     );
   }
+
+  ///将传入的时间根据空格切割  只要前半部分
+  static String getFirstDate(String date) {
+    if (date == null) {
+      return "";
+    }
+    if (date.contains(" ")) {
+      return date.split(" ")[0];
+    } else {
+      return date;
+    }
+  }
 }

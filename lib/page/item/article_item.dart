@@ -51,6 +51,7 @@ class _ArticleItemState extends State<ArticleItem> {
     return Card(
       elevation: 4.0,
       margin: EdgeInsets.symmetric(horizontal: 8.0, vertical: 6.0),
+      //加了InkWell 点击有水波纹效果
       child: InkWell(
         child: Row(
           children: <Widget>[
@@ -111,17 +112,70 @@ class _ArticleItemState extends State<ArticleItem> {
         ),
       );
     } else {
-      return null;
+      return Container(
+        height: 18,
+      );
     }
   }
 
   Widget _buildBottomInfo() {
     List<Widget> infoList = [];
     var itemData = widget.itemData;
+
+    //图标
     infoList.add(Icon(
       itemData.author == "" ? Icons.folder_shared : Icons.person,
       size: 20.0,
     ));
+
+    //作者 或者  分享者
+    infoList.add(Padding(
+      padding: EdgeInsets.only(
+          /*top: 10.0, bottom: 10.0,*/
+          left: 5.0,
+          right: 6.0),
+      child: Text(
+        itemData.author == "" ? itemData.shareUser : itemData.author,
+        //只展示一行
+        maxLines: 1,
+        //超出 展示...
+        overflow: TextOverflow.ellipsis,
+        style: TextStyle(
+          color: Colors.black54,
+          fontSize: 10.0,
+        ),
+      ),
+    ));
+
+    //时间
+    infoList.add(Expanded(
+      child: Text(
+        '时间: ' + ToolUtils.getFirstDate(itemData.niceDate),
+        style: TextStyle(
+          color: Colors.black54,
+          fontSize: 10.0,
+        ),
+        maxLines: 1,
+        overflow: TextOverflow.ellipsis,
+      ),
+    ));
+
+    //chapter 分类
+    infoList.add(
+      Padding(
+        padding: EdgeInsets.only(right: 10),
+        child: Text(
+          itemData.superChapterName + " / " + itemData.chapterName,
+          maxLines: 1,
+          style: TextStyle(
+            color: Colors.blue,
+            fontSize: 10.0,
+            decoration: TextDecoration.none,
+          ),
+        ),
+      ),
+    );
+
     return Row(
       children: infoList,
     );

@@ -74,6 +74,9 @@ class _HomeListPageState extends State<HomeListPage> {
       dataUtils.getArticleData(pageIndex)
     ]).then((List listData) {
       //需要将顶部数据List<ArticleData> 和 正常文章数据ArticleDataEntity中的datas进行合并,组成一个新的List
+      if (listData == null) {
+        return;
+      }
       for (var value in listData) {
         if (value is List<ArticleData>) {
           //标记 置顶的数据

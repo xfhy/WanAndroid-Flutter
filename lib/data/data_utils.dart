@@ -31,7 +31,9 @@ class DataUtils {
     //首先从服务端获取最外层的json数据的data
     List datas = await httpUtils.get(Api.BANNER);
     //然后将data(list)解析成一个一个的BannerData对象,然后组装成list
-    return datas.map((item) => BannerData.fromJson(item)).toList();
+    return datas == null
+        ? null
+        : datas.map((item) => BannerData.fromJson(item)).toList();
   }
 
   ///首页数据模块
@@ -39,12 +41,14 @@ class DataUtils {
   Future<ArticleDataEntity> getArticleData(int pageIndex) async {
     //首先从服务端获取最外层的json数据的data
     var datas = await httpUtils.get(Api.ARTICLE_LIST + "$pageIndex/json");
-    return ArticleDataEntity().fromJson(datas);
+    return datas == null ? null : ArticleDataEntity().fromJson(datas);
   }
 
   ///获取首页置顶文章数据
   Future<List<ArticleData>> getTopArticleData() async {
     List datas = await httpUtils.get(Api.ARTICLE_TO_LIST);
-    return datas.map((item) => ArticleData().fromJson(item)).toList();
+    return datas == null
+        ? null
+        : datas.map((item) => ArticleData().fromJson(item)).toList();
   }
 }

@@ -9,7 +9,6 @@ import 'myinfo_page.dart';
 ///主页面
 
 class WanAndroidApp extends StatefulWidget {
-
   WanAndroidApp() {
     //初始化路由
     Routes.init();
@@ -35,7 +34,20 @@ class _WanAndroidAppState extends State<WanAndroidApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(
-          primaryColor: AppColors.colorPrimary, accentColor: Colors.blue),
+        primaryColor: AppColors.colorPrimary,
+        accentColor: AppColors.accentColor,
+        textTheme: TextTheme(
+          //设置Material的默认字体样式
+          body1: TextStyle(
+            color: Color(0xFF888888),
+            fontSize: 16.0,
+          ),
+        ),
+        iconTheme: IconThemeData(
+          color: AppColors.iconColor,
+          size: 25.0,
+        ),
+      ),
       routes: Routes.routes,
       home: Scaffold(
         appBar: AppBar(
