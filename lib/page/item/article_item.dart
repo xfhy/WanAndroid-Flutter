@@ -11,7 +11,15 @@ import 'package:wanandroidflutter/util/tool_utils.dart';
 class ArticleItem extends StatefulWidget {
   ArticleData itemData;
 
-  ArticleItem(this.itemData);
+  ///是否为首页展示  如果是则可以点击进入知识体系
+  final bool isHomeShow;
+
+  ///是否可以点击作者,跳转作者的文章
+  final bool isClick;
+
+  ArticleItem(this.itemData,
+      {Key key, this.isHomeShow = true, this.isClick = true})
+      : super(key: key);
 
   @override
   State createState() {
@@ -141,7 +149,7 @@ class _ArticleItemState extends State<ArticleItem> {
         //超出 展示...
         overflow: TextOverflow.ellipsis,
         style: TextStyle(
-          color: Colors.black54,
+          color: widget.isClick ? Colors.blue : Colors.black54,
           fontSize: 10.0,
         ),
       ),
@@ -168,7 +176,7 @@ class _ArticleItemState extends State<ArticleItem> {
           itemData.superChapterName + " / " + itemData.chapterName,
           maxLines: 1,
           style: TextStyle(
-            color: Colors.blue,
+            color: widget.isHomeShow ? Colors.blue : Colors.black54,
             fontSize: 10.0,
             decoration: TextDecoration.none,
           ),
