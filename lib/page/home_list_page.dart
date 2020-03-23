@@ -44,13 +44,17 @@ class _HomeListPageState extends State<HomeListPage> {
         child: CircularProgressIndicator(),
       );
     }
+
+    //正常展示数据
     Widget listView = ListView.builder(
       itemCount: articleDataList.length + 1,
       itemBuilder: (context, i) => buildItem(i),
       controller: _scrollController,
     );
-    //TODO 列表刷新
-    return listView;
+    return RefreshIndicator(
+      child: listView,
+      onRefresh: _pullToRefresh,
+    );
   }
 
   void loadData() {
@@ -101,5 +105,15 @@ class _HomeListPageState extends State<HomeListPage> {
 
     //构建item视图
     return ArticleItem(itemData);
+  }
+
+  ///刷新
+  Future<void> _pullToRefresh() {
+    pageIndex = 0;
+    if (articleDataList != null) {
+      articleDataList.clear();
+    }
+    loadData();
+    return Future(() => LogUtil.d("lalala"));
   }
 }
