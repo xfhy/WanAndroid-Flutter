@@ -19,14 +19,26 @@ class _HomeListPageState extends State<HomeListPage> {
   ///当前页index
   int pageIndex = 0;
 
+  ///一共有多少个数据  后端返回的
+  int listTotalSize = 0;
+
   ///文章数据
   List<ArticleData> articleDataList = [];
+
+  ///listview控制器
   ScrollController _scrollController;
 
   @override
   void initState() {
     super.initState();
     _scrollController = ScrollController();
+    _scrollController.addListener(() {
+      var maxScroll = _scrollController.position.maxScrollExtent;
+      var pixels = _scrollController.position.pixels;
+      if (maxScroll == pixels && articleDataList.length < listTotalSize) {
+        getArticleData();
+      }
+    });
     loadData();
   }
 
@@ -72,24 +84,47 @@ class _HomeListPageState extends State<HomeListPage> {
     }
   }
 
+  ///获取文章数据
   void getArticleData() async {
-    await Future.wait([
-      dataUtils.getTopArticleData(),
-      dataUtils.getArticleData(pageIndex)
-    ]).then((List listData) {
+    //请求列表  顶部数据+下面的文章数据
+    List<Future> requestList = [];
+    if (pageIndex == 0) {
+      requestList.add(dataUtils.getTopArticleData());
+    }
+    requestList.add(dataUtils.getArticleData(pageIndex));
+
+    //所有请求都回来了,才执行后面的操作
+    await Future.wait(requestList).then((List listData) {
       //需要将顶部数据List<ArticleData> 和 正常文章数据ArticleDataEntity中的datas进行合并,组成一个新的List
       if (listData == null) {
         return;
       }
-      for (var value in listData) {
-        if (value is List<ArticleData>) {
-          //标记 置顶的数据
-          articleDataList.addAll(value);
-        } else if (value is ArticleDataEntity) {
-          articleDataList.addAll(value.datas);
+
+      //更新state
+      setState(() {
+        //操作当前Widget的数据,必须放到setState中,不然可能不起效果!
+        //操作当前Widget的数据,必须放到setState中,不然可能不起效果!
+        //操作当前Widget的数据,必须放到setState中,不然可能不起效果!
+
+        //第一页 清空数据
+        if (pageIndex == 0) {
+          articleDataList.clear();
         }
-      }
-      setState(() {});
+
+        //添加数据到集合中
+        for (var value in listData) {
+          if (value is List<ArticleData>) {
+            //标记 置顶的数据
+            articleDataList.addAll(value);
+          } else if (value is ArticleDataEntity) {
+            articleDataList.addAll(value.datas);
+            listTotalSize = value.total;
+          }
+        }
+
+        //页数+1
+        pageIndex++;
+      });
     });
   }
 
@@ -110,9 +145,7 @@ class _HomeListPageState extends State<HomeListPage> {
   ///刷新
   Future<void> _pullToRefresh() {
     pageIndex = 0;
-    if (articleDataList != null) {
-      articleDataList.clear();
-    }
+    articleDataList.clear();
     loadData();
     return Future(() => LogUtil.d("lalala"));
   }

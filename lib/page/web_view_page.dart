@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
 import 'package:wanandroidflutter/page/args/route_web_page_data.dart';
+import 'package:wanandroidflutter/util/log_util.dart';
 import 'package:wanandroidflutter/util/tool_utils.dart';
 
 ///网页详情
@@ -19,6 +20,9 @@ class _WebViewPageState extends State<WebViewPage> {
   Widget build(BuildContext context) {
     RouteWebPageData pageData =
         ModalRoute.of(context).settings.arguments as RouteWebPageData;
+
+    LogUtil.d("访问url : ${pageData.url}");
+
     return new WebviewScaffold(
       url: pageData.url,
       appBar: new AppBar(
