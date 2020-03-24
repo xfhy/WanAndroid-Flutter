@@ -25,6 +25,8 @@ dependencies:
   path_provider: ^1.6.5
   # 包装了与原生WebView通信的WebView
   flutter_webview_plugin: ^0.3.10+1
+  # loading 各种菊花
+  flutter_spinkit: ^4.1.2
   flutter:
     sdk: flutter
 
