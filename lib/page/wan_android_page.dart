@@ -1,4 +1,6 @@
+import 'package:event_bus/event_bus.dart';
 import 'package:flutter/material.dart';
+import 'package:wanandroidflutter/common/application.dart';
 import 'package:wanandroidflutter/constant/AppColors.dart';
 import 'package:wanandroidflutter/constant/routes.dart';
 import 'package:wanandroidflutter/page/tree_page.dart';
@@ -28,6 +30,13 @@ class _WanAndroidAppState extends State<WanAndroidApp> {
   void initState() {
     super.initState();
     _pageController = PageController();
+    Application.eventBus = EventBus();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    Application.eventBus.destroy();
   }
 
   @override

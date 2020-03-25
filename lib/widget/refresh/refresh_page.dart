@@ -92,7 +92,8 @@ class _RefreshPageState extends State<RefreshPage> {
     _getMoreData();
     //判断是否滑动到了列表最底部 && 有更多数据 && 可加载更多
     _scrollController.addListener(() {
-      if ((_scrollController.position.pixels == _scrollController.position.maxScrollExtent) &&
+      if ((_scrollController.position.pixels ==
+              _scrollController.position.maxScrollExtent) &&
           _hasMore &&
           widget.isCanLoadMore) {
         _getMoreData();
@@ -123,7 +124,16 @@ class _RefreshPageState extends State<RefreshPage> {
               //指示器颜色
               color: AppColors.colorPrimary,
             )
-          : ListView.builder(itemBuilder: null);
+          : ListView.builder(
+              //不支持下拉刷新  直接返回
+              itemBuilder: (context, index) {
+                return _getItem(index);
+              },
+              //item数量
+              itemCount: _getListCount(),
+              //监听
+              controller: _scrollController,
+            );
     } else {
       return ListView.builder(
         //不支持下拉刷新  则直接返回listview

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:wanandroidflutter/common/application.dart';
 import 'package:wanandroidflutter/data/data_utils.dart';
 import 'package:wanandroidflutter/data/model/article_data_entity.dart';
 import 'package:wanandroidflutter/widget/home_banner.dart';
@@ -14,13 +15,12 @@ class HomeListPage extends StatefulWidget {
 
 class _HomeListPageState extends State<HomeListPage>
     with AutomaticKeepAliveClientMixin {
-  var bannerData;
-  HomeBanner _homeBanner;
+  HomeBanner _homeBanner = HomeBanner();
 
   @override
   void initState() {
     super.initState();
-    //loadData();
+    getBannerData();
   }
 
   @override
@@ -32,27 +32,25 @@ class _HomeListPageState extends State<HomeListPage>
           child: RefreshPage(
             requestApi: getArticleData,
             renderItem: buildItem,
-            /*headerView: _homeBanner,
-            isHaveHeader: true,*/
+            headerView: _getHeaderView,
+            isHaveHeader: true,
           ),
         ),
       ],
     );
   }
 
-  void loadData() {
-    getBannerData();
-    getArticleData();
+  _getHeaderView() {
+    return _homeBanner;
   }
 
   void getBannerData() async {
     var datas = await dataUtils.getBannerData();
-    if (datas != null) {
-      setState(() {
-        bannerData = datas;
-        _homeBanner = HomeBanner(datas);
-      });
-    }
+    //1. 可能这个网络请求很快就回来了,这时还没创建banner Widget,就可以直接给它赋值
+    _homeBanner.setBannerData(datas);
+    //封装的事件 发送到EventBus 事件总线,然后Banner那边接收到 刷新UI
+    //2. 否则 发一个事件出去,banner那边先完成build Widget的话,也能收到.
+    Application.eventBus.fire(BannerDataEvent(datas));
   }
 
   ///获取文章数据
