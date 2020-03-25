@@ -92,9 +92,9 @@ class _RefreshPageState extends State<RefreshPage> {
     _getMoreData();
     //判断是否滑动到了列表最底部 && 有更多数据 && 可加载更多
     _scrollController.addListener(() {
-      if (_scrollController.position.pixels ==
-              _scrollController.position.maxScrollExtent ||
-          _hasMore && widget.isCanLoadMore) {
+      if ((_scrollController.position.pixels == _scrollController.position.maxScrollExtent) &&
+          _hasMore &&
+          widget.isCanLoadMore) {
         _getMoreData();
       }
     });
@@ -159,7 +159,7 @@ class _RefreshPageState extends State<RefreshPage> {
           isLoading = false;
         });
       }
-    }else if (!isLoading && !_hasMore) {
+    } else if (!isLoading && !_hasMore) {
       //没有在加载  并且没有更多数据   此时
       _pageIndex = widget.startIndex;
     }
