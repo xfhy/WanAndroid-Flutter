@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:wanandroidflutter/common/application.dart';
 import 'package:wanandroidflutter/constant/routes.dart';
 import 'package:wanandroidflutter/data/model/banner_data.dart';
-import 'package:wanandroidflutter/page/args/route_web_page_data.dart';
+import 'package:wanandroidflutter/page/webview/route_web_page_data.dart';
 import 'package:wanandroidflutter/util/tool_utils.dart';
 
 ///首页的banner

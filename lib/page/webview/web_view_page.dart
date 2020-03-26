@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
-import 'package:wanandroidflutter/page/args/route_web_page_data.dart';
+import 'package:wanandroidflutter/page/webview/route_web_page_data.dart';
 import 'package:wanandroidflutter/util/log_util.dart';
 import 'package:wanandroidflutter/util/tool_utils.dart';
 

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:wanandroidflutter/constant/routes.dart';
 import 'package:wanandroidflutter/data/model/article_data_entity.dart';
-import 'package:wanandroidflutter/page/args/route_web_page_data.dart';
+import 'package:wanandroidflutter/page/knowledge/knowledge_page_data.dart';
+import 'package:wanandroidflutter/page/webview/route_web_page_data.dart';
+import 'package:wanandroidflutter/util/log_util.dart';
 import 'package:wanandroidflutter/util/tool_utils.dart';
 
 ///2020年03月22日22:01:38
@@ -9,16 +11,16 @@ import 'package:wanandroidflutter/util/tool_utils.dart';
 ///xfhy
 
 class ArticleItem extends StatefulWidget {
-  ArticleData itemData;
+  final ArticleData itemData;
 
   ///是否为首页展示  如果是则可以点击进入知识体系
   final bool isHomeShow;
 
   ///是否可以点击作者,跳转作者的文章
-  final bool isClick;
+  final bool isClickUser;
 
   ArticleItem(this.itemData,
-      {Key key, this.isHomeShow = true, this.isClick = true})
+      {Key key, this.isHomeShow = true, this.isClickUser = true})
       : super(key: key);
 
   @override
@@ -137,22 +139,36 @@ class _ArticleItemState extends State<ArticleItem> {
     ));
 
     //作者 或者  分享者
-    infoList.add(Padding(
-      padding: EdgeInsets.only(
-          /*top: 10.0, bottom: 10.0,*/
-          left: 5.0,
-          right: 6.0),
-      child: Text(
-        itemData.author == "" ? itemData.shareUser : itemData.author,
-        //只展示一行
-        maxLines: 1,
-        //超出 展示...
-        overflow: TextOverflow.ellipsis,
-        style: TextStyle(
-          color: widget.isClick ? Colors.blue : Colors.black54,
-          fontSize: 10.0,
+    infoList.add(GestureDetector(
+      child: Padding(
+        padding: EdgeInsets.only(
+            /*top: 10.0, bottom: 10.0,*/
+            left: 5.0,
+            right: 6.0),
+        child: Text(
+          itemData.author == "" ? itemData.shareUser : itemData.author,
+          //只展示一行
+          maxLines: 1,
+          //超出 展示...
+          overflow: TextOverflow.ellipsis,
+          style: TextStyle(
+            color: widget.isClickUser ? Colors.blue : Colors.black54,
+            fontSize: 10.0,
+          ),
         ),
       ),
+      onTap: () {
+        if (widget.isClickUser) {
+          if (!(itemData.author == "")) {
+            //如果作者不为空，说明可以根据作者昵称查看文章 否则查看 分享人 个人信息主页
+            KnowledgePageData knowledgePageData =
+                KnowledgePageData(itemData.id, itemData.author);
+            Navigator.pushNamed(context, Routes.knowledgePage, arguments: knowledgePageData);
+          } else {
+            LogUtil.d("跳转分享个人中心");
+          }
+        }
+      },
     ));
 
     //时间
