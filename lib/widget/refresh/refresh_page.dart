@@ -387,8 +387,9 @@ class _RefreshPageState extends State<RefreshPage> {
         items.clear();
         items.addAll(newEntries);
         isLoading = false;
-        return Future(() {});
+        //setState 里面不能返回Future
       });
     }
+    return Future(() {});
   }
 }
