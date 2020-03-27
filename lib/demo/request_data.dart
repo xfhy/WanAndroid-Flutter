@@ -35,6 +35,12 @@ class RequestDemo extends StatelessWidget {
                       getTopAndArticleList();
                     },
                   ),
+                  RaisedButton(
+                    child: Text('搜索作者文章'),
+                    onPressed: () {
+                      dataUtils.getAuthorArticleData("扔物线", 0);
+                    },
+                  ),
                   const Text('C'),
                   const Text('D'),
                 ]),
@@ -47,8 +53,7 @@ class RequestDemo extends StatelessWidget {
   }
 
   void getTopAndArticleList() async {
-    await Future.wait(
-            [dataUtils.getTopArticleData(), dataUtils.getArticleData(0)])
+    await Future.wait([dataUtils.getTopArticleData(), dataUtils.getArticleData(0)])
         .then((List listData) {
       //需要将顶部数据List<ArticleData> 和 正常文章数据ArticleDataEntity中的datas进行合并,组成一个新的List
       List<ArticleData> articleDataList = [];

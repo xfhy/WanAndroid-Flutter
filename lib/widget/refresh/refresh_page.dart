@@ -274,7 +274,8 @@ class _RefreshPageState extends State<RefreshPage> {
     return Container(
       //获取屏幕宽度
       width: MediaQuery.of(context).size.width,
-      height: MediaQuery.of(context).size.height * 0.85,
+      height: MediaQuery.of(context).size.height,
+      color: Colors.white,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,

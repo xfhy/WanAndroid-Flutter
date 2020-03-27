@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:wanandroidflutter/constant/routes.dart';
 import 'package:wanandroidflutter/data/model/article_data_entity.dart';
+import 'package:wanandroidflutter/page/knowledge/knowledge_page.dart';
 import 'package:wanandroidflutter/page/knowledge/knowledge_page_data.dart';
 import 'package:wanandroidflutter/page/webview/route_web_page_data.dart';
 import 'package:wanandroidflutter/util/log_util.dart';
@@ -162,7 +163,7 @@ class _ArticleItemState extends State<ArticleItem> {
           if (!(itemData.author == "")) {
             //如果作者不为空，说明可以根据作者昵称查看文章 否则查看 分享人 个人信息主页
             KnowledgePageData knowledgePageData =
-                KnowledgePageData(itemData.id, itemData.author);
+                KnowledgePageData(KnowledgePage.AUTHOR_ID, itemData.author);
             Navigator.pushNamed(context, Routes.knowledgePage, arguments: knowledgePageData);
           } else {
             LogUtil.d("跳转分享个人中心");

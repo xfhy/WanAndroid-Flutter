@@ -56,12 +56,14 @@ class _HomeBannerState extends State<HomeBanner> {
 
     //监听事件总线上数据变化
     Application.eventBus.on<BannerDataEvent>().listen((event) {
-      setState(() {
-        widget.bannerList = event.bannerList;
-        if (widget.bannerList == null) {
-          widget.bannerList = [];
-        }
-      });
+      if (mounted) {
+        setState(() {
+          widget.bannerList = event.bannerList;
+          if (widget.bannerList == null) {
+            widget.bannerList = [];
+          }
+        });
+      }
     });
   }
 
@@ -102,8 +104,7 @@ class _HomeBannerState extends State<HomeBanner> {
             Positioned(
               top: 0.0,
               right: 0.0,
-              child: _numberIndicator(
-                  context, virtualIndex, widget.bannerList.length),
+              child: _numberIndicator(context, virtualIndex, widget.bannerList.length),
             ),
           ],
         ),
@@ -135,8 +136,7 @@ class _HomeBannerState extends State<HomeBanner> {
     }
     List<Widget> childWidget = [];
     //头部添加一个尾部Item,模拟循环
-    childWidget
-        .add(_buildBannerItem(widget.bannerList[widget.bannerList.length - 1]));
+    childWidget.add(_buildBannerItem(widget.bannerList[widget.bannerList.length - 1]));
     for (var bannerData in widget.bannerList) {
       childWidget.add(_buildBannerItem(bannerData));
     }
@@ -242,8 +242,8 @@ class _HomeBannerState extends State<HomeBanner> {
 
   ///banner item 点击事件
   void _onClickBanner(BannerData bannerData) {
-    RouteWebPageData pageData = new RouteWebPageData(
-        id: bannerData.id, title: bannerData.title, url: bannerData.url);
+    RouteWebPageData pageData =
+        new RouteWebPageData(id: bannerData.id, title: bannerData.title, url: bannerData.url);
     Navigator.pushNamed(context, Routes.webViewPage, arguments: pageData);
   }
 

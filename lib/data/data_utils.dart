@@ -1,7 +1,6 @@
 import 'package:wanandroidflutter/constant/api.dart';
 import 'package:wanandroidflutter/data/http_util.dart';
 import 'package:wanandroidflutter/data/model/banner_data.dart';
-import 'package:wanandroidflutter/util/log_util.dart';
 
 import 'model/article_data_entity.dart';
 
@@ -31,9 +30,7 @@ class DataUtils {
     //首先从服务端获取最外层的json数据的data
     List datas = await httpUtils.get(Api.BANNER);
     //然后将data(list)解析成一个一个的BannerData对象,然后组装成list
-    return datas == null
-        ? null
-        : datas.map((item) => BannerData.fromJson(item)).toList();
+    return datas == null ? null : datas.map((item) => BannerData.fromJson(item)).toList();
   }
 
   ///首页数据模块
@@ -47,8 +44,14 @@ class DataUtils {
   ///获取首页置顶文章数据
   Future<List<ArticleData>> getTopArticleData() async {
     List datas = await httpUtils.get(Api.ARTICLE_TO_LIST);
-    return datas == null
-        ? null
-        : datas.map((item) => ArticleData().fromJson(item)).toList();
+    return datas == null ? null : datas.map((item) => ArticleData().fromJson(item)).toList();
+  }
+
+  // 按照作者昵称搜索文章(点击文章作者头像)
+  Future<ArticleDataEntity> getAuthorArticleData(String author, int pageIndex) async {
+    String path = 'article/list/$pageIndex/json';
+    Map<String, dynamic> params = {"author": author};
+    var datas = await httpUtils.get(path, params: params);
+    return datas == null ? null : ArticleDataEntity().fromJson(datas);
   }
 }
