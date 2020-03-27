@@ -45,7 +45,13 @@ class _KnowledgePageState extends State<KnowledgePage> with AutomaticKeepAliveCl
       await dataUtils.getAuthorArticleData(author, pageIndex).then(
           (ArticleDataEntity articleDataEntity) {
         if (articleDataEntity != null && articleDataEntity.datas != null) {
-          result = {"list": articleDataEntity.datas, 'total': 0, 'pageIndex': pageIndex};
+          //页数+1
+          pageIndex++;
+          result = {
+            "list": articleDataEntity.datas,
+            'total': articleDataEntity.total,
+            'pageIndex': pageIndex,
+          };
         }
       }, onError: (e) {
         LogUtil.d("发送错误 ${e.toString()}");
