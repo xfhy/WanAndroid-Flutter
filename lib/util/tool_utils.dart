@@ -10,6 +10,9 @@ class ToolUtils {
 
   ///标题符号转换
   static String signToStr(String str) {
+    if (null == str || "" == str) {
+      return "";
+    }
     return str
         .replaceAll(RegExp("(<em[^>]*>)|(</em>)"), "")
         .replaceAll(RegExp("\n{2,}"), "\n")
