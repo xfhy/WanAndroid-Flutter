@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:wanandroidflutter/constant/app_colors.dart';
 import 'package:wanandroidflutter/widget/stroke_widget.dart';
@@ -86,7 +87,7 @@ class ToolUtils {
   }
 
   ///get通用状态栏
-  static AppBar getCommonAppBar(BuildContext context, String title, {int maxLine, double fontSize, List<Widget> actions}) {
+  static AppBar getCommonAppBar(BuildContext context, String title, {double fontSize, List<Widget> actions}) {
     if (title == null) {
       title = "";
     }
@@ -105,7 +106,6 @@ class ToolUtils {
       ),
       title: Text(
         title,
-        maxLines: maxLine == null ? 1 : maxLine,
         style: TextStyle(
           color: Colors.white,
           fontSize: fontSize == null ? 18.0 : fontSize,
@@ -117,4 +117,25 @@ class ToolUtils {
       actions: actions == null ? <Widget>[] : actions,
     );
   }
+
+  ///展示loading dialog
+  static void showLoading(BuildContext context, String loadingText) {
+    //展示一个loading dialog
+    showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (_) {
+          return SpinKitFadingCircle(
+            color: AppColors.colorPrimary,
+          );
+        });
+  }
+
+  ///隐藏loading dialog
+  static void disMissLoadingDialog(bool isAddLoading, BuildContext context) {
+    if (isAddLoading) {
+      Navigator.of(context).pop();
+    }
+  }
+
 }
