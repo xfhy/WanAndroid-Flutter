@@ -3,8 +3,11 @@
 ///xfhy
 
 class KnowledgePageData {
-  int id;
+  ///页面类型
+  int pageType;
+  int userId;
+  //作者名称 or  分享人名称
   String author;
 
-  KnowledgePageData(this.id, this.author);
+  KnowledgePageData(this.pageType, this.userId, this.author);
 }

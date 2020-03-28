@@ -20,8 +20,7 @@ class ArticleItem extends StatefulWidget {
   ///是否可以点击作者,跳转作者的文章
   final bool isClickUser;
 
-  ArticleItem(this.itemData,
-      {Key key, this.isHomeShow = true, this.isClickUser = true})
+  ArticleItem(this.itemData, {Key key, this.isHomeShow = true, this.isClickUser = true})
       : super(key: key);
 
   @override
@@ -91,9 +90,7 @@ class _ArticleItemState extends State<ArticleItem> {
   ///文章 item 点击事件
   void _onClickArticleItem() {
     RouteWebPageData pageData = new RouteWebPageData(
-        id: widget.itemData.id,
-        title: widget.itemData.title,
-        url: widget.itemData.link);
+        id: widget.itemData.id, title: widget.itemData.title, url: widget.itemData.link);
     Navigator.pushNamed(context, Routes.webViewPage, arguments: pageData);
   }
 
@@ -111,8 +108,7 @@ class _ArticleItemState extends State<ArticleItem> {
     //加入 tag 标签
     if (widget.itemData.tags.length > 0) {
       tagsList.addAll(widget.itemData.tags
-          .map(
-              (item) => ToolUtils.buildStrokeTagWidget(item.name, Colors.green))
+          .map((item) => ToolUtils.buildStrokeTagWidget(item.name, Colors.green))
           .toList());
     }
     if (tagsList.length > 0) {
@@ -160,14 +156,17 @@ class _ArticleItemState extends State<ArticleItem> {
       ),
       onTap: () {
         if (widget.isClickUser) {
-          if (!(itemData.author == "")) {
-            //如果作者不为空，说明可以根据作者昵称查看文章 否则查看 分享人 个人信息主页
+          //如果作者不为空，说明可以根据作者昵称查看文章 否则查看 分享人 列表数据
+          if (itemData.author == "") {
             KnowledgePageData knowledgePageData =
-                KnowledgePageData(KnowledgePage.AUTHOR_ID, itemData.author);
+            KnowledgePageData(KnowledgePage.SHARE_AUTHOR_PAGE_TYPE, itemData.userId, itemData.shareUser);
             Navigator.pushNamed(context, Routes.knowledgePage, arguments: knowledgePageData);
           } else {
-            LogUtil.d("跳转分享个人中心");
+            KnowledgePageData knowledgePageData =
+            KnowledgePageData(KnowledgePage.AUTHOR_PAGE_TYPE, itemData.userId, itemData.author);
+            Navigator.pushNamed(context, Routes.knowledgePage, arguments: knowledgePageData);
           }
+          LogUtil.d(itemData.toString());
         }
       },
     ));

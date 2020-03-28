@@ -12,7 +12,8 @@ import 'knowledge_page_data.dart';
 ///xfhy
 
 class KnowledgePage extends StatefulWidget {
-  static const int AUTHOR_ID = -1;
+  static const int AUTHOR_PAGE_TYPE = -1;
+  static const int SHARE_AUTHOR_PAGE_TYPE = -2;
 
   @override
   State createState() {
@@ -21,7 +22,8 @@ class KnowledgePage extends StatefulWidget {
 }
 
 class _KnowledgePageState extends State<KnowledgePage> with AutomaticKeepAliveClientMixin {
-  int id;
+  int pageType;
+  int userId;
   String author;
 
   @override
@@ -40,23 +42,40 @@ class _KnowledgePageState extends State<KnowledgePage> with AutomaticKeepAliveCl
     var pageIndex = (params is Map) ? params['pageIndex'] : 0;
     //组装一个json 方便刷新页page 那边取数据
     Map<String, dynamic> result = {"list": [], 'total': 0, 'pageIndex': pageIndex};
-    if (KnowledgePage.AUTHOR_ID == id) {
+
+    if (KnowledgePage.AUTHOR_PAGE_TYPE == pageType) {
       //当前是展示作者的文章
       await dataUtils.getAuthorArticleData(author, pageIndex).then(
-          (ArticleDataEntity articleDataEntity) {
-        if (articleDataEntity != null && articleDataEntity.datas != null) {
-          //页数+1
-          pageIndex++;
-          result = {
-            "list": articleDataEntity.datas,
-            'total': articleDataEntity.total,
-            'pageIndex': pageIndex,
-          };
-        }
-      }, onError: (e) {
+              (ArticleDataEntity articleDataEntity) {
+            if (articleDataEntity != null && articleDataEntity.datas != null) {
+              //页数+1
+              pageIndex++;
+              result = {
+                "list": articleDataEntity.datas,
+                'total': articleDataEntity.total,
+                'pageIndex': pageIndex,
+              };
+            }
+          }, onError: (e) {
         LogUtil.d("发送错误 ${e.toString()}");
       });
-    } else {}
+    } else if(KnowledgePage.SHARE_AUTHOR_PAGE_TYPE == pageType){
+      //当前是展示 分享人的文章
+      await dataUtils.getShareAuthorArticleData(userId, pageIndex).then(
+              (ArticleDataEntity articleDataEntity) {
+            if (articleDataEntity != null && articleDataEntity.datas != null) {
+              //页数+1
+              pageIndex++;
+              result = {
+                "list": articleDataEntity.datas,
+                'total': articleDataEntity.total,
+                'pageIndex': pageIndex,
+              };
+            }
+          }, onError: (e) {
+        LogUtil.d("发送错误 ${e.toString()}");
+      });
+    }
     return result;
   }
 
@@ -66,7 +85,8 @@ class _KnowledgePageState extends State<KnowledgePage> with AutomaticKeepAliveCl
 
     //接收传递过来的参数
     KnowledgePageData pageData = ModalRoute.of(context).settings.arguments as KnowledgePageData;
-    id = pageData.id;
+    pageType = pageData.pageType;
+    userId = pageData.userId;
     author = pageData.author;
 
     return Scaffold(

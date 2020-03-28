@@ -54,4 +54,12 @@ class DataUtils {
     var datas = await httpUtils.get(path, params: params);
     return datas == null ? null : ArticleDataEntity().fromJson(datas);
   }
+
+  // 获取分享人的列表数据
+  Future<ArticleDataEntity> getShareAuthorArticleData(int userId, int pageIndex) async {
+    String path = 'user/$userId/share_articles/$pageIndex/json';
+    var datas = await httpUtils.get(path);
+    var articleData = datas['shareArticles'];
+    return articleData == null ? null : ArticleDataEntity().fromJson(articleData);
+  }
 }

@@ -41,6 +41,12 @@ class RequestDemo extends StatelessWidget {
                       dataUtils.getAuthorArticleData("扔物线", 0);
                     },
                   ),
+                  RaisedButton(
+                    child: Text('分享人列表数据'),
+                    onPressed: () {
+                      dataUtils.getShareAuthorArticleData("2", 0);
+                    },
+                  ),
                   const Text('C'),
                   const Text('D'),
                 ]),
