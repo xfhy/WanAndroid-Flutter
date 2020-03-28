@@ -114,8 +114,10 @@ class _WanAndroidAppState extends State<WanAndroidApp> {
           ],
           onTap: (page) {
             //滑动到相应页面   curve是动画效果
-            _pageController.animateToPage(page,
-                duration: Duration(milliseconds: 300), curve: Curves.easeIn);
+            /*_pageController.animateToPage(page,
+                duration: Duration(milliseconds: 300), curve: Curves.easeIn);*/
+            //直接转到相应页面,没得啥动画效果   并且不会经过中间的页面,上面的那个会经过中间页
+            _pageController.jumpToPage(page);
           },
           currentIndex: currentPage,
         ),
