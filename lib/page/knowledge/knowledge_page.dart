@@ -46,33 +46,33 @@ class _KnowledgePageState extends State<KnowledgePage> with AutomaticKeepAliveCl
     if (KnowledgePage.AUTHOR_PAGE_TYPE == pageType) {
       //当前是展示作者的文章
       await dataUtils.getAuthorArticleData(author, pageIndex).then(
-              (ArticleDataEntity articleDataEntity) {
-            if (articleDataEntity != null && articleDataEntity.datas != null) {
-              //页数+1
-              pageIndex++;
-              result = {
-                "list": articleDataEntity.datas,
-                'total': articleDataEntity.total,
-                'pageIndex': pageIndex,
-              };
-            }
-          }, onError: (e) {
+          (ArticleDataEntity articleDataEntity) {
+        if (articleDataEntity != null && articleDataEntity.datas != null) {
+          //页数+1
+          pageIndex++;
+          result = {
+            "list": articleDataEntity.datas,
+            'total': articleDataEntity.total,
+            'pageIndex': pageIndex,
+          };
+        }
+      }, onError: (e) {
         LogUtil.d("发送错误 ${e.toString()}");
       });
-    } else if(KnowledgePage.SHARE_AUTHOR_PAGE_TYPE == pageType){
+    } else if (KnowledgePage.SHARE_AUTHOR_PAGE_TYPE == pageType) {
       //当前是展示 分享人的文章
       await dataUtils.getShareAuthorArticleData(userId, pageIndex).then(
-              (ArticleDataEntity articleDataEntity) {
-            if (articleDataEntity != null && articleDataEntity.datas != null) {
-              //页数+1
-              pageIndex++;
-              result = {
-                "list": articleDataEntity.datas,
-                'total': articleDataEntity.total,
-                'pageIndex': pageIndex,
-              };
-            }
-          }, onError: (e) {
+          (ArticleDataEntity articleDataEntity) {
+        if (articleDataEntity != null && articleDataEntity.datas != null) {
+          //页数+1
+          pageIndex++;
+          result = {
+            "list": articleDataEntity.datas,
+            'total': articleDataEntity.total,
+            'pageIndex': pageIndex,
+          };
+        }
+      }, onError: (e) {
         LogUtil.d("发送错误 ${e.toString()}");
       });
     }
