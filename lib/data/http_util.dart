@@ -119,7 +119,7 @@ class HttpUtils {
       disMissLoadingDialog(isAddLoading, context);
 
       //json 数据
-      LogUtil.d(response.toString());
+      //LogUtil.d(response.toString());
 
       if (response.data['errorCode'] == 0) {
         //这里直接把data部分给搞出来,免得每次在外面去解析˛
