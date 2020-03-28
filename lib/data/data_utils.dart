@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:sprintf/sprintf.dart';
 import 'package:wanandroidflutter/constant/api.dart';
 import 'package:wanandroidflutter/data/http_util.dart';
 import 'package:wanandroidflutter/data/model/banner_data.dart';
@@ -76,4 +77,30 @@ class DataUtils {
     LogUtil.d(data);
     return data == null ? null : LoginDataEntity().fromJson(data);
   }
+
+  //退出登录
+  Future loginOut() async {
+    var data = await httpUtils.get(Api.LOGIN_OUT);
+    //登录失败,则为null
+    LogUtil.d(data);
+    //return data == null ? null : LoginDataEntity().fromJson(data);
+    return null;
+  }
+
+  ///收藏文章  articleId:文章id
+  Future collectArticle(int articleId) async {
+    //https://www.wanandroid.com/lg/collect/1165/json
+    //格式化语法 使用了一个三方库才能格式化 print(sprintf("%s %s", ["Hello", "World"]));
+    var data = await httpUtils.post(sprintf(Api.COLLECT_ARTICLE, [articleId]));
+    LogUtil.d(data);
+    return null;
+  }
+
+  ///获取收藏文章列表
+  Future<ArticleDataEntity> getCollectArticles(int pageIndex) async {
+    var data = await httpUtils.get(sprintf(Api.COLLECT_ARTICLE_LIST, [pageIndex]));
+    LogUtil.d(data);
+    return data == null ? null : ArticleDataEntity().fromJson(data);
+  }
+
 }

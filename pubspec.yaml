@@ -31,6 +31,8 @@ dependencies:
   event_bus: ^1.1.1
   # toast
   fluttertoast: ^4.0.1
+  # String 格式化
+  sprintf: ^4.0.2
   flutter:
     sdk: flutter
 

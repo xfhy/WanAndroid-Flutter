@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sprintf/sprintf.dart';
 import 'package:wanandroidflutter/data/data_utils.dart';
 import 'package:wanandroidflutter/data/model/article_data_entity.dart';
 import 'package:wanandroidflutter/util/log_util.dart';
@@ -51,6 +52,26 @@ class RequestDemo extends StatelessWidget {
                     child: Text('登录'),
                     onPressed: () {
                       dataUtils.login("xxxxxxx415456465465", "xxxxxxx", context);
+                    },
+                  ),
+                  RaisedButton(
+                    child: Text('退出登录'),
+                    onPressed: () {
+                      dataUtils.loginOut();
+                    },
+                  ),
+                  RaisedButton(
+                    child: Text('收藏文章'),
+                    onPressed: () {
+                      LogUtil.d(sprintf("lg/collect/%s/json", [15615]));
+                      dataUtils.collectArticle(12424);
+                    },
+                  ),
+                  RaisedButton(
+                    child: Text('收藏的文章列表'),
+                    onPressed: () {
+                      //LogUtil.d(sprintf("lg/collect/%s/json", [15615]));
+                      dataUtils.getCollectArticles(0);
                     },
                   ),
                   const Text('C'),
