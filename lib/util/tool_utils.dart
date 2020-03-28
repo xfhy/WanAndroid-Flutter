@@ -72,15 +72,49 @@ class ToolUtils {
     }
   }
 
+  ///展示toast
   static void showToast({String msg}) {
     Fluttertoast.showToast(
       msg: msg,
       toastLength: Toast.LENGTH_SHORT,
-      gravity: ToastGravity.CENTER,
+      gravity: ToastGravity.BOTTOM,
       timeInSecForIosWeb: 1,
       fontSize: 16.0,
       backgroundColor: Colors.red,
       textColor: Colors.white,
+    );
+  }
+
+  ///get通用状态栏
+  static AppBar getCommonAppBar(BuildContext context, String title, {int maxLine, double fontSize, List<Widget> actions}) {
+    if (title == null) {
+      title = "";
+    }
+    return AppBar(
+      leading: IconButton(
+        icon: Icon(
+          Icons.arrow_back,
+          color: Colors.white,
+        ),
+        //点击返回
+        onPressed: () {
+          if (context != null) {
+            Navigator.pop(context);
+          }
+        },
+      ),
+      title: Text(
+        title,
+        maxLines: maxLine == null ? 1 : maxLine,
+        style: TextStyle(
+          color: Colors.white,
+          fontSize: fontSize == null ? 18.0 : fontSize,
+        ),
+      ),
+      //标题栏居中
+      centerTitle: true,
+      //右边的action 按钮
+      actions: actions == null ? <Widget>[] : actions,
     );
   }
 }

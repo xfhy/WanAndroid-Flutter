@@ -3,6 +3,7 @@ import 'package:wanandroidflutter/data/data_utils.dart';
 import 'package:wanandroidflutter/data/model/article_data_entity.dart';
 import 'package:wanandroidflutter/page/item/article_item.dart';
 import 'package:wanandroidflutter/util/log_util.dart';
+import 'package:wanandroidflutter/util/tool_utils.dart';
 import 'package:wanandroidflutter/widget/refresh/refresh_page.dart';
 
 import 'knowledge_page_data.dart';
@@ -111,20 +112,7 @@ class _KnowledgePageState extends State<KnowledgePage> with AutomaticKeepAliveCl
     cid = pageData.cid;
 
     return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-          icon: Icon(
-            Icons.arrow_back,
-            color: Colors.white,
-          ),
-          onPressed: _pushBack,
-        ),
-        centerTitle: true,
-        title: Text(
-          title,
-          style: TextStyle(color: Colors.white),
-        ),
-      ),
+      appBar: ToolUtils.getCommonAppBar(context, title),
       body: Column(
         children: <Widget>[
           Expanded(
@@ -138,7 +126,4 @@ class _KnowledgePageState extends State<KnowledgePage> with AutomaticKeepAliveCl
     );
   }
 
-  void _pushBack() {
-    Navigator.pop(context);
-  }
 }

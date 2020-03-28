@@ -27,9 +27,7 @@ class _WebViewPageState extends State<WebViewPage> {
 
     return new WebviewScaffold(
       url: pageData.url,
-      appBar: new AppBar(
-        title: Text(ToolUtils.signToStr(pageData.title)),
-      ),
+      appBar: getAppBar(),
       withZoom: true,
       withLocalStorage: true,
       hidden: true,
@@ -47,5 +45,20 @@ class _WebViewPageState extends State<WebViewPage> {
       pageData.title = "首页";
       pageData.url = Api.BASE_URL;
     }
+  }
+
+  AppBar getAppBar() {
+    AppBar appBar = ToolUtils.getCommonAppBar(context, ToolUtils.signToStr(pageData.title), fontSize: 14.0, actions: [
+      IconButton(
+        icon: Icon(
+          Icons.more_vert,
+          color: Colors.white,
+        ),
+        onPressed: () {
+          //todo xfhy 网页标题栏菜单
+        },
+      ),
+    ]);
+    return appBar;
   }
 }

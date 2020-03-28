@@ -35,21 +35,7 @@ class _LoginPagePage extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-          icon: Icon(
-            Icons.arrow_back,
-            color: Colors.white,
-          ),
-          onPressed: _pushBack,
-        ),
-        title: Text(
-          "登录",
-          style: TextStyle(color: Colors.white),
-        ),
-        //标题栏居中
-        centerTitle: true,
-      ),
+      appBar: ToolUtils.getCommonAppBar(context, "登录"),
       body: SingleChildScrollView(
         child: Container(
           height: MediaQuery.of(context).size.height,
