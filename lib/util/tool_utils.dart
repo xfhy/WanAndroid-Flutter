@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:wanandroidflutter/constant/AppColors.dart';
 import 'package:wanandroidflutter/widget/stroke_widget.dart';
 
 /// 一些常用的工具类方法
@@ -68,5 +70,17 @@ class ToolUtils {
     } else {
       return date;
     }
+  }
+
+  static void showToast({String msg}) {
+    Fluttertoast.showToast(
+      msg: msg,
+      toastLength: Toast.LENGTH_SHORT,
+      gravity: ToastGravity.CENTER,
+      timeInSecForIosWeb: 1,
+      fontSize: 16.0,
+      backgroundColor: Colors.red,
+      textColor: Colors.white,
+    );
   }
 }

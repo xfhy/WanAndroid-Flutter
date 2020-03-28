@@ -3,3 +3,6 @@ flutter_webview_plugin=/Users/xfhy/development/flutter/.pub-cache/hosted/pub.flu
 fluttertoast=/Users/xfhy/development/flutter/.pub-cache/hosted/pub.flutter-io.cn/fluttertoast-4.0.1/
 path_provider=/Users/xfhy/development/flutter/.pub-cache/hosted/pub.flutter-io.cn/path_provider-1.6.5/
 path_provider_macos=/Users/xfhy/development/flutter/.pub-cache/hosted/pub.flutter-io.cn/path_provider_macos-0.0.4/
+shared_preferences=/Users/xfhy/development/flutter/.pub-cache/hosted/pub.flutter-io.cn/shared_preferences-0.5.6+3/
+shared_preferences_macos=/Users/xfhy/development/flutter/.pub-cache/hosted/pub.flutter-io.cn/shared_preferences_macos-0.0.1+6/
+shared_preferences_web=/Users/xfhy/development/flutter/.pub-cache/hosted/pub.flutter-io.cn/shared_preferences_web-0.1.2+4/
