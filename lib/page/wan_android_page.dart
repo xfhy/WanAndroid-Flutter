@@ -78,9 +78,9 @@ class _WanAndroidAppState extends State<WanAndroidApp> {
           //PageView类似于Android中的ViewPager
           child: PageView(
             children: <Widget>[
+              MyInfoPage(),
               HomeListPage(),
               TreePage(),
-              MyInfoPage(),
             ],
             //设置controller,可以控制PageView的当前页
             controller: _pageController,

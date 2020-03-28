@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:wanandroidflutter/common/application.dart';
 
 ///日志打印
 ///可以动态生产环境和开发环境,且长度不限
@@ -7,7 +8,7 @@ class LogUtil {
   static var _split =
       "$_separator$_separator$_separator$_separator$_separator$_separator$_separator$_separator$_separator";
   static var _title = "xfhy-Log";
-  static var _isDebug = true;
+  static var _isDebug = Application.isDebug;
 
   ///print默认是有长度限制的
   static int _limitLength = 800;

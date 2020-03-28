@@ -59,6 +59,8 @@ flutter:
   # 图片资源
   assets:
     - images/
+    - images/ic_launcher.png
+    - images/ic_launcher_foreground.png
 
   # To add assets to your application, add an assets section, like this:
   # assets:
