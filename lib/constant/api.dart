@@ -11,4 +11,9 @@ class Api {
   static const String ARTICLE_LIST = "article/list/";
   //置顶文章
   static const String ARTICLE_TO_LIST = "article/top/json";
+  //登录
+  static const String LOGIN = "user/login";
+  //注册
+  static const String REGISTER = "user/register";
+
 }

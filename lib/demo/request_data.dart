@@ -44,7 +44,13 @@ class RequestDemo extends StatelessWidget {
                   RaisedButton(
                     child: Text('分享人列表数据'),
                     onPressed: () {
-                      dataUtils.getShareAuthorArticleData("2", 0);
+                      dataUtils.getShareAuthorArticleData(2, 0);
+                    },
+                  ),
+                  RaisedButton(
+                    child: Text('登录'),
+                    onPressed: () {
+                      dataUtils.login("xxxxxxx415456465465", "xxxxxxx", context);
                     },
                   ),
                   const Text('C'),

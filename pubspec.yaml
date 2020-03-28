@@ -29,6 +29,8 @@ dependencies:
   flutter_spinkit: ^4.1.2
   # 事件总线
   event_bus: ^1.1.1
+  # toast
+  fluttertoast: ^4.0.1
   flutter:
     sdk: flutter
 

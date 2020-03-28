@@ -1,8 +1,12 @@
+import 'package:dio/dio.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:wanandroidflutter/constant/api.dart';
 import 'package:wanandroidflutter/data/http_util.dart';
 import 'package:wanandroidflutter/data/model/banner_data.dart';
+import 'package:wanandroidflutter/util/log_util.dart';
 
 import 'model/article_data_entity.dart';
+import 'model/login_data_entity.dart';
 
 ///数据获取帮助类
 ///2020年03月21日15:16:55
@@ -61,5 +65,15 @@ class DataUtils {
     var datas = await httpUtils.get(path);
     var articleData = datas['shareArticles'];
     return articleData == null ? null : ArticleDataEntity().fromJson(articleData);
+  }
+
+  //登录
+  Future<LoginDataEntity> login(String userName, String password, BuildContext context) async {
+    FormData formData = FormData.fromMap({"username": userName, "password": password});
+    var data = await httpUtils.post(Api.LOGIN,
+        formData: formData, isAddLoading: true, context: context, loadingText: "正在登录...");
+    //登录失败,则为null
+    LogUtil.d(data);
+    return data == null ? null : LoginDataEntity().fromJson(data);
   }
 }
