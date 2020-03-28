@@ -6,8 +6,12 @@ class KnowledgePageData {
   ///页面类型
   int pageType;
   int userId;
-  //作者名称 or  分享人名称
-  String author;
 
-  KnowledgePageData(this.pageType, this.userId, this.author);
+  //知识体系的id
+  int cid;
+
+  //作者名称 or  分享人名称 or 知识体系
+  String title;
+
+  KnowledgePageData(this.pageType, {this.userId, this.title, this.cid});
 }

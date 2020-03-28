@@ -137,38 +137,28 @@ class _ArticleItemState extends State<ArticleItem> {
     ));
 
     //作者 或者  分享者
-    infoList.add(GestureDetector(
-      child: Padding(
-        padding: EdgeInsets.only(
-            /*top: 10.0, bottom: 10.0,*/
-            left: 5.0,
-            right: 6.0),
-        child: Text(
-          itemData.author == "" ? itemData.shareUser : itemData.author,
-          //只展示一行
-          maxLines: 1,
-          //超出 展示...
-          overflow: TextOverflow.ellipsis,
-          style: TextStyle(
-            color: widget.isClickUser ? Colors.blue : Colors.black54,
-            fontSize: 10.0,
+    infoList.add(
+      GestureDetector(
+        child: Padding(
+          padding: EdgeInsets.only(
+              /*top: 10.0, bottom: 10.0,*/
+              left: 5.0,
+              right: 6.0),
+          child: Text(
+            itemData.author == "" ? itemData.shareUser : itemData.author,
+            //只展示一行
+            maxLines: 1,
+            //超出 展示...
+            overflow: TextOverflow.ellipsis,
+            style: TextStyle(
+              color: widget.isClickUser ? Colors.blue : Colors.black54,
+              fontSize: 10.0,
+            ),
           ),
         ),
+        onTap: gotoAuthorListPage,
       ),
-      onTap: () {
-        if (widget.isClickUser) {
-          //如果作者不为空，说明可以根据作者昵称查看文章 否则查看 分享人 列表数据
-          if (itemData.author == "") {
-            KnowledgePageData knowledgePageData = KnowledgePageData(KnowledgePage.SHARE_AUTHOR_PAGE_TYPE, itemData.userId, itemData.shareUser);
-            Navigator.pushNamed(context, Routes.knowledgePage, arguments: knowledgePageData);
-          } else {
-            KnowledgePageData knowledgePageData = KnowledgePageData(KnowledgePage.AUTHOR_PAGE_TYPE, itemData.userId, itemData.author);
-            Navigator.pushNamed(context, Routes.knowledgePage, arguments: knowledgePageData);
-          }
-          LogUtil.d(itemData.toString());
-        }
-      },
-    ));
+    );
 
     //时间
     infoList.add(Expanded(
@@ -187,14 +177,17 @@ class _ArticleItemState extends State<ArticleItem> {
     infoList.add(
       Padding(
         padding: EdgeInsets.only(right: 10),
-        child: Text(
-          itemData.superChapterName + " / " + itemData.chapterName,
-          maxLines: 1,
-          style: TextStyle(
-            color: widget.isHomeShow ? Colors.blue : Colors.black54,
-            fontSize: 10.0,
-            decoration: TextDecoration.none,
+        child: GestureDetector(
+          child: Text(
+            itemData.superChapterName + " / " + itemData.chapterName,
+            maxLines: 1,
+            style: TextStyle(
+              color: widget.isHomeShow ? Colors.blue : Colors.black54,
+              fontSize: 10.0,
+              decoration: TextDecoration.none,
+            ),
           ),
+          onTap: gotoKnowledgeArticleList,
         ),
       ),
     );
@@ -229,6 +222,32 @@ class _ArticleItemState extends State<ArticleItem> {
         widget.itemData.collect = true;
       });
       ToolUtils.showToast(msg: "收藏成功");
+    }
+  }
+
+  ///查看作者文章  or  分享人的文章
+  void gotoAuthorListPage() {
+    if (widget.isClickUser) {
+      //如果作者不为空，说明可以根据作者昵称查看文章 否则查看 分享人 列表数据
+      if (widget.itemData.author == "") {
+        KnowledgePageData knowledgePageData =
+            KnowledgePageData(KnowledgePage.SHARE_AUTHOR_PAGE_TYPE, userId: widget.itemData.userId, title: widget.itemData.shareUser);
+        Navigator.pushNamed(context, Routes.knowledgePage, arguments: knowledgePageData);
+      } else {
+        KnowledgePageData knowledgePageData =
+            KnowledgePageData(KnowledgePage.AUTHOR_PAGE_TYPE, userId: widget.itemData.userId, title: widget.itemData.author);
+        Navigator.pushNamed(context, Routes.knowledgePage, arguments: knowledgePageData);
+      }
+      LogUtil.d(widget.itemData.toString());
+    }
+  }
+
+  ///跳转到 知识体系文章列表
+  void gotoKnowledgeArticleList() {
+    if (widget.isHomeShow) {
+      KnowledgePageData knowledgePageData =
+          KnowledgePageData(KnowledgePage.KNOWLEDGE_ARTICLE_PAGE_TYPE, title: widget.itemData.chapterName, cid: widget.itemData.chapterId);
+      Navigator.pushNamed(context, Routes.knowledgePage, arguments: knowledgePageData);
     }
   }
 }

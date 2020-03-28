@@ -127,6 +127,15 @@ class DataUtils {
     return data == null ? null : ArticleDataEntity().fromJson(data);
   }
 
+  //知识体系下的文章
+  Future<ArticleDataEntity> getKnowledgeArticleData(int cid, int pageIndex) async {
+    Map<String, dynamic> params = {"cid": cid};
+    var data = await httpUtils.get(sprintf(Api.KNOWLEDGE_ARTICLE_LIST, [pageIndex]), params: params);
+    return data == null ? null : ArticleDataEntity().fromJson(data);
+  }
+
+  //--------------sp--------------
+
   //设置登录状态
   void setLoginState(bool isLogin) {
     spUtil.putBool(SharedPreferencesKeys.LOGIN_STATE_KEY, isLogin);

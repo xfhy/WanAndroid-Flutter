@@ -12,8 +12,14 @@ import 'knowledge_page_data.dart';
 ///xfhy
 
 class KnowledgePage extends StatefulWidget {
+  ///作者页面类型
   static const int AUTHOR_PAGE_TYPE = -1;
+
+  ///分享人页面类型
   static const int SHARE_AUTHOR_PAGE_TYPE = -2;
+
+  ///知识体系 文章 页面类型
+  static const int KNOWLEDGE_ARTICLE_PAGE_TYPE = -3;
 
   @override
   State createState() {
@@ -24,7 +30,8 @@ class KnowledgePage extends StatefulWidget {
 class _KnowledgePageState extends State<KnowledgePage> with AutomaticKeepAliveClientMixin {
   int pageType;
   int userId;
-  String author;
+  String title;
+  int cid;
 
   @override
   bool get wantKeepAlive => true;
@@ -45,8 +52,7 @@ class _KnowledgePageState extends State<KnowledgePage> with AutomaticKeepAliveCl
 
     if (KnowledgePage.AUTHOR_PAGE_TYPE == pageType) {
       //当前是展示作者的文章
-      await dataUtils.getAuthorArticleData(author, pageIndex).then(
-          (ArticleDataEntity articleDataEntity) {
+      await dataUtils.getAuthorArticleData(title, pageIndex).then((ArticleDataEntity articleDataEntity) {
         if (articleDataEntity != null && articleDataEntity.datas != null) {
           //页数+1
           pageIndex++;
@@ -61,8 +67,22 @@ class _KnowledgePageState extends State<KnowledgePage> with AutomaticKeepAliveCl
       });
     } else if (KnowledgePage.SHARE_AUTHOR_PAGE_TYPE == pageType) {
       //当前是展示 分享人的文章
-      await dataUtils.getShareAuthorArticleData(userId, pageIndex).then(
-          (ArticleDataEntity articleDataEntity) {
+      await dataUtils.getShareAuthorArticleData(userId, pageIndex).then((ArticleDataEntity articleDataEntity) {
+        if (articleDataEntity != null && articleDataEntity.datas != null) {
+          //页数+1
+          pageIndex++;
+          result = {
+            "list": articleDataEntity.datas,
+            'total': articleDataEntity.total,
+            'pageIndex': pageIndex,
+          };
+        }
+      }, onError: (e) {
+        LogUtil.d("发送错误 ${e.toString()}");
+      });
+    } else if (KnowledgePage.KNOWLEDGE_ARTICLE_PAGE_TYPE == pageType) {
+      //当前是展示 知识体系文章
+      await dataUtils.getKnowledgeArticleData(cid, pageIndex).then((ArticleDataEntity articleDataEntity) {
         if (articleDataEntity != null && articleDataEntity.datas != null) {
           //页数+1
           pageIndex++;
@@ -87,12 +107,21 @@ class _KnowledgePageState extends State<KnowledgePage> with AutomaticKeepAliveCl
     KnowledgePageData pageData = ModalRoute.of(context).settings.arguments as KnowledgePageData;
     pageType = pageData.pageType;
     userId = pageData.userId;
-    author = pageData.author;
+    title = pageData.title;
+    cid = pageData.cid;
 
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+          icon: Icon(
+            Icons.arrow_back,
+            color: Colors.white,
+          ),
+          onPressed: _pushBack,
+        ),
+        centerTitle: true,
         title: Text(
-          author,
+          title,
           style: TextStyle(color: Colors.white),
         ),
       ),
@@ -107,5 +136,9 @@ class _KnowledgePageState extends State<KnowledgePage> with AutomaticKeepAliveCl
         ],
       ),
     );
+  }
+
+  void _pushBack() {
+    Navigator.pop(context);
   }
 }
