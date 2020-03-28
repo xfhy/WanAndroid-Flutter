@@ -4,6 +4,7 @@ import 'package:wanandroidflutter/common/application.dart';
 import 'package:wanandroidflutter/constant/AppColors.dart';
 import 'package:wanandroidflutter/data/data_utils.dart';
 import 'package:wanandroidflutter/data/model/login_data_entity.dart';
+import 'package:wanandroidflutter/util/tool_utils.dart';
 
 ///登录界面
 ///2020年03月28日10:45:04
@@ -24,6 +25,7 @@ class _LoginPagePage extends State<LoginPage> {
   @override
   void initState() {
     super.initState();
+    //设置调试时的数据
     if (Application.isDebug) {
       _nameController.text = "xxxxxxx415456465465";
       _pwdController.text = "xxxxxxx";
@@ -70,8 +72,8 @@ class _LoginPagePage extends State<LoginPage> {
                       children: <Widget>[
                         //顶部图标
                         Container(
-                          width: 50,
-                          height: 50,
+                          width: 70,
+                          height: 70,
                           margin: EdgeInsets.only(top: 10.0, bottom: 10.0),
                           child: Image.asset(
                             "images/ic_launcher.png",
@@ -99,7 +101,9 @@ class _LoginPagePage extends State<LoginPage> {
     );
   }
 
-  void _pushBack() {}
+  void _pushBack() {
+    Navigator.pop(context);
+  }
 
   Widget buildSignInTextForm() {
     return Column(
@@ -187,9 +191,11 @@ class _LoginPagePage extends State<LoginPage> {
   }
 
   //登录
-  void login() async{
+  void login() async {
     LoginDataEntity loginDataEntity = await dataUtils.login(_nameController.text, _pwdController.text, context);
-
+    dataUtils.setLoginState(true);
+    ToolUtils.showToast(msg: "登录成功");
+    Navigator.of(context).pop();
   }
 
   //注册

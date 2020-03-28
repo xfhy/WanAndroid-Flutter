@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:sprintf/sprintf.dart';
+import 'package:wanandroidflutter/common/application.dart';
 import 'package:wanandroidflutter/constant/api.dart';
 import 'package:wanandroidflutter/constant/constants.dart';
 import 'package:wanandroidflutter/data/http_util.dart';
@@ -76,16 +77,19 @@ class DataUtils {
     var data = await httpUtils.post(Api.LOGIN, formData: formData, isAddLoading: true, context: context, loadingText: "正在登录...");
     //登录失败,则为null
     LogUtil.d(data);
+    if (data != null) {
+      Application.isLogin = true;
+    }
     return data == null ? null : LoginDataEntity().fromJson(data);
   }
 
   //退出登录
   Future loginOut() async {
     var data = await httpUtils.get(Api.LOGIN_OUT);
-    //登录失败,则为null
-    LogUtil.d(data);
+    //LogUtil.d(data);
     //return data == null ? null : LoginDataEntity().fromJson(data);
-    return null;
+    Application.isLogin = false;
+    return data;
   }
 
   ///收藏文章  articleId:文章id
@@ -93,14 +97,21 @@ class DataUtils {
     //https://www.wanandroid.com/lg/collect/1165/json
     //格式化语法 使用了一个三方库才能格式化 print(sprintf("%s %s", ["Hello", "World"]));
     var data = await httpUtils.post(sprintf(Api.COLLECT_ARTICLE, [articleId]));
-    LogUtil.d(data);
-    return null;
+    //LogUtil.d(data);
+    return data;
+  }
+
+  //取消收藏文章
+  Future cancelCollectArticle(int articleId) async {
+    var data = await httpUtils.post(sprintf(Api.CANCEL_COLLECT_ARTICLE, [articleId]));
+    //LogUtil.d(data);
+    return data;
   }
 
   ///获取收藏文章列表
   Future<ArticleDataEntity> getCollectArticles(int pageIndex) async {
     var data = await httpUtils.get(sprintf(Api.COLLECT_ARTICLE_LIST, [pageIndex]));
-    LogUtil.d(data);
+    //LogUtil.d(data);
     return data == null ? null : ArticleDataEntity().fromJson(data);
   }
 

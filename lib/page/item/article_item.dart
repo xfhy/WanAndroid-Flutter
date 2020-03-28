@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:wanandroidflutter/constant/routes.dart';
+import 'package:wanandroidflutter/data/data_utils.dart';
 import 'package:wanandroidflutter/data/model/article_data_entity.dart';
 import 'package:wanandroidflutter/page/knowledge/knowledge_page.dart';
 import 'package:wanandroidflutter/page/knowledge/knowledge_page_data.dart';
@@ -20,8 +21,7 @@ class ArticleItem extends StatefulWidget {
   ///是否可以点击作者,跳转作者的文章
   final bool isClickUser;
 
-  ArticleItem(this.itemData, {Key key, this.isHomeShow = true, this.isClickUser = true})
-      : super(key: key);
+  ArticleItem(this.itemData, {Key key, this.isHomeShow = true, this.isClickUser = true}) : super(key: key);
 
   @override
   State createState() {
@@ -69,7 +69,11 @@ class _ArticleItemState extends State<ArticleItem> {
               height: 70,
               width: 70,
               child: Center(
-                child: Icon(Icons.favorite_border),
+                child: IconButton(
+                  icon: Icon(widget.itemData.collect ? Icons.favorite : Icons.favorite_border),
+                  color: widget.itemData.collect ? Colors.deepOrange : Colors.grey,
+                  onPressed: collectArticle,
+                ),
               ),
             ),
 
@@ -89,8 +93,7 @@ class _ArticleItemState extends State<ArticleItem> {
 
   ///文章 item 点击事件
   void _onClickArticleItem() {
-    RouteWebPageData pageData = new RouteWebPageData(
-        id: widget.itemData.id, title: widget.itemData.title, url: widget.itemData.link);
+    RouteWebPageData pageData = new RouteWebPageData(id: widget.itemData.id, title: widget.itemData.title, url: widget.itemData.link);
     Navigator.pushNamed(context, Routes.webViewPage, arguments: pageData);
   }
 
@@ -107,9 +110,7 @@ class _ArticleItemState extends State<ArticleItem> {
     }
     //加入 tag 标签
     if (widget.itemData.tags.length > 0) {
-      tagsList.addAll(widget.itemData.tags
-          .map((item) => ToolUtils.buildStrokeTagWidget(item.name, Colors.green))
-          .toList());
+      tagsList.addAll(widget.itemData.tags.map((item) => ToolUtils.buildStrokeTagWidget(item.name, Colors.green)).toList());
     }
     if (tagsList.length > 0) {
       return Container(
@@ -158,12 +159,10 @@ class _ArticleItemState extends State<ArticleItem> {
         if (widget.isClickUser) {
           //如果作者不为空，说明可以根据作者昵称查看文章 否则查看 分享人 列表数据
           if (itemData.author == "") {
-            KnowledgePageData knowledgePageData =
-            KnowledgePageData(KnowledgePage.SHARE_AUTHOR_PAGE_TYPE, itemData.userId, itemData.shareUser);
+            KnowledgePageData knowledgePageData = KnowledgePageData(KnowledgePage.SHARE_AUTHOR_PAGE_TYPE, itemData.userId, itemData.shareUser);
             Navigator.pushNamed(context, Routes.knowledgePage, arguments: knowledgePageData);
           } else {
-            KnowledgePageData knowledgePageData =
-            KnowledgePageData(KnowledgePage.AUTHOR_PAGE_TYPE, itemData.userId, itemData.author);
+            KnowledgePageData knowledgePageData = KnowledgePageData(KnowledgePage.AUTHOR_PAGE_TYPE, itemData.userId, itemData.author);
             Navigator.pushNamed(context, Routes.knowledgePage, arguments: knowledgePageData);
           }
           LogUtil.d(itemData.toString());
@@ -203,5 +202,33 @@ class _ArticleItemState extends State<ArticleItem> {
     return Row(
       children: infoList,
     );
+  }
+
+  //收藏文章
+  void collectArticle() async {
+    bool isLogin = await dataUtils.isLogin();
+    if (!isLogin) {
+      //未登录,跳转到登录界面
+      Navigator.pushNamed(context, Routes.loginPage);
+      return;
+    }
+
+    //已登录
+
+    //之前已收藏  那么就是取消收藏
+    if (widget.itemData.collect) {
+      await dataUtils.cancelCollectArticle(widget.itemData.id);
+      setState(() {
+        widget.itemData.collect = false;
+      });
+      ToolUtils.showToast(msg: "取消收藏成功");
+    } else {
+      //收藏
+      await dataUtils.collectArticle(widget.itemData.id);
+      setState(() {
+        widget.itemData.collect = true;
+      });
+      ToolUtils.showToast(msg: "收藏成功");
+    }
   }
 }

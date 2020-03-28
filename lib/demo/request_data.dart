@@ -68,6 +68,12 @@ class RequestDemo extends StatelessWidget {
                     },
                   ),
                   RaisedButton(
+                    child: Text('取消收藏文章'),
+                    onPressed: () {
+                      dataUtils.cancelCollectArticle(12424);
+                    },
+                  ),
+                  RaisedButton(
                     child: Text('收藏的文章列表'),
                     onPressed: () {
                       //LogUtil.d(sprintf("lg/collect/%s/json", [15615]));

@@ -24,6 +24,8 @@ class Api {
 
   //收藏 站内文章
   static const String COLLECT_ARTICLE = "lg/collect/%s/json";
+  //取消收藏文章
+  static const String CANCEL_COLLECT_ARTICLE = "lg/uncollect_originId/%s/json";
 
   //收藏的文章列表
   static const String COLLECT_ARTICLE_LIST = "lg/collect/list/%s/json";

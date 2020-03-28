@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:wanandroidflutter/common/application.dart';
 import 'package:wanandroidflutter/constant/routes.dart';
 import 'package:wanandroidflutter/util/log_util.dart';
 
@@ -14,22 +15,31 @@ class _MyInfoPageState extends State<MyInfoPage> {
     return Container(
       color: Colors.blue,
       child: Column(
-        children: <Widget>[
-          RaisedButton(
-            child: Text('跳转登录界面'),
-            onPressed: () {
-              LogUtil.d("跳转");
-              Navigator.pushNamed(context, Routes.loginPage);
-            },
-          ),
-          RaisedButton(
-            child: Text('退出登录'),
-            onPressed: () {
-              LogUtil.d("跳转");
-            },
-          ),
-        ],
+        children: getWidget(),
       ),
     );
+  }
+
+  List<Widget> getWidget() {
+    if (Application.isLogin) {
+      return [
+        RaisedButton(
+          child: Text('退出登录'),
+          onPressed: () {
+            LogUtil.d("跳转");
+          },
+        ),
+      ];
+    } else {
+      return [
+        RaisedButton(
+          child: Text('跳转登录界面'),
+          onPressed: () {
+            LogUtil.d("跳转");
+            Navigator.pushNamed(context, Routes.loginPage);
+          },
+        ),
+      ];
+    }
   }
 }
