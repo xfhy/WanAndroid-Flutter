@@ -1,120 +1,105 @@
+import 'dart:async';
+
 import 'package:shared_preferences/shared_preferences.dart';
 
 ///sp工具类
 ///2020年03月28日15:28:30
 ///xfhy
 
+SpUtil spUtil = SpUtil();
+
 class SpUtil {
-  static SpUtil _instance;
-  static SharedPreferences _spf;
+  SpUtil._internal();
 
-  //构造方法也私有化
-  SpUtil._();
+  static SpUtil _singleton = new SpUtil._internal();
 
-  static Future<SpUtil> get instance async {
-    return await getInstance();
-  }
-
-  Future _init() async {
-    _spf = await SharedPreferences.getInstance();
-  }
-
-  static Future<SpUtil> getInstance() async {
-    if (instance == null) {
-      _instance = SpUtil._();
-    }
-    if (_spf == null) {
-      await _instance._init();
-    }
-    return _instance;
-  }
-
-  static bool _beforeCheck() {
-    if (_spf == null) {
-      _instance._init();
-      return true;
-    }
-    return false;
-  }
-
+  factory SpUtil() => _singleton;
 
   // 判断是否存在数据
-  bool hasKey(String key) {
-    Set keys = getKeys();
+  Future<bool> hasKey(String key) async {
+    Set keys = await getKeys();
     return keys.contains(key);
   }
 
-  Set<String> getKeys() {
-    if (_beforeCheck()) return null;
-    return _spf.getKeys();
+  ///可能为空
+  get(String key) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.get(key);
   }
 
-  get(String key) {
-    if (_beforeCheck()) return null;
-    return _spf.get(key);
-  }
-
-  getString(String key) {
-    if (_beforeCheck()) return null;
-    return _spf.getString(key);
+  getString(String key) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    var strData = prefs.getString(key);
+    return strData == null ? "" : strData;
   }
 
   Future<bool> putString(String key, String value) async {
-    if (_beforeCheck()) return null;
-    return await _spf.setString(key, value);
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return await prefs.setString(key, value);
   }
 
-  bool getBool(String key) {
-    if (_beforeCheck()) return null;
-    return _spf.getBool(key);
+  Future<bool> getBool(String key) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    var boolData = prefs.getBool(key);
+    return boolData == null ? false : boolData;
   }
 
   Future<bool> putBool(String key, bool value) async {
-    if (_beforeCheck()) return null;
-    return await _spf.setBool(key, value);
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return await prefs.setBool(key, value);
   }
 
-  int getInt(String key) {
-    if (_beforeCheck()) return null;
-    return _spf.getInt(key);
+  Future<int> getInt(String key) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    var intData = prefs.getInt(key);
+    return intData == null ? -1 : intData;
   }
 
   Future<bool> putInt(String key, int value) async {
-    if (_beforeCheck()) return null;
-    return await _spf.setInt(key, value);
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return await prefs.setInt(key, value);
   }
 
-  double getDouble(String key) {
-    if (_beforeCheck()) return null;
-    return _spf.getDouble(key);
+  Future<double> getDouble(String key) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    var doubleData = prefs.getDouble(key);
+    return doubleData == null ? 0.0 : doubleData;
   }
 
   Future<bool> putDouble(String key, double value) async {
-    if (_beforeCheck()) return null;
-    return await _spf.setDouble(key, value);
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return await prefs.setDouble(key, value);
   }
 
-  List<String> getStringList(String key) {
-    return _spf.getStringList(key);
+  Future<List<String>> getStringList(String key) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    var list = prefs.getStringList(key);
+    return list == null ? [] : list;
   }
 
   Future<bool> putStringList(String key, List<String> value) async {
-    if (_beforeCheck()) return null;
-    return await _spf.setStringList(key, value);
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return await prefs.setStringList(key, value);
   }
 
-  dynamic getDynamic(String key) {
-    if (_beforeCheck()) return null;
-    return _spf.get(key);
+  dynamic getDynamic(String key) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.get(key);
   }
 
-  Future<bool> remove(String key) {
-    if (_beforeCheck()) return null;
-    return _spf.remove(key);
+  Future<bool> remove(String key) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.remove(key);
   }
 
-  Future<bool> clear() {
-    if (_beforeCheck()) return null;
-    return _spf.clear();
+  Future<bool> clear() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.clear();
+  }
+
+  Future<Set> getKeys() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    var data = prefs.getKeys();
+    return data == null ? [] : data;
   }
 }

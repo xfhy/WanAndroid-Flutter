@@ -2,9 +2,11 @@ import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:sprintf/sprintf.dart';
 import 'package:wanandroidflutter/constant/api.dart';
+import 'package:wanandroidflutter/constant/constants.dart';
 import 'package:wanandroidflutter/data/http_util.dart';
 import 'package:wanandroidflutter/data/model/banner_data.dart';
 import 'package:wanandroidflutter/util/log_util.dart';
+import 'package:wanandroidflutter/util/shared_preferences.dart';
 
 import 'model/article_data_entity.dart';
 import 'model/login_data_entity.dart';
@@ -71,8 +73,7 @@ class DataUtils {
   //登录
   Future<LoginDataEntity> login(String userName, String password, BuildContext context) async {
     FormData formData = FormData.fromMap({"username": userName, "password": password});
-    var data = await httpUtils.post(Api.LOGIN,
-        formData: formData, isAddLoading: true, context: context, loadingText: "正在登录...");
+    var data = await httpUtils.post(Api.LOGIN, formData: formData, isAddLoading: true, context: context, loadingText: "正在登录...");
     //登录失败,则为null
     LogUtil.d(data);
     return data == null ? null : LoginDataEntity().fromJson(data);
@@ -103,4 +104,13 @@ class DataUtils {
     return data == null ? null : ArticleDataEntity().fromJson(data);
   }
 
+  //设置登录状态
+  void setLoginState(bool isLogin) {
+    spUtil.putBool(SharedPreferencesKeys.LOGIN_STATE_KEY, isLogin);
+  }
+
+  ///当前是否已经登录
+  Future<bool> isLogin() {
+    return spUtil.getBool(SharedPreferencesKeys.LOGIN_STATE_KEY);
+  }
 }

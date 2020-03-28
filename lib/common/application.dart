@@ -12,6 +12,4 @@ class Application {
   //事件总线
   static EventBus eventBus;
 
-  static SpUtil sp;
-
 }
