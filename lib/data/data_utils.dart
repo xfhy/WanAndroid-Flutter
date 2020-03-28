@@ -83,6 +83,18 @@ class DataUtils {
     return data == null ? null : LoginDataEntity().fromJson(data);
   }
 
+  //注册
+  Future<LoginDataEntity> register(String userName, String password, BuildContext context) async {
+    FormData formData = FormData.fromMap({"username": userName, "password": password, "repassword": password});
+    var data = await httpUtils.post(Api.REGISTER, formData: formData, isAddLoading: true, context: context, loadingText: "正在注册并登录...");
+    //登录失败,则为null
+    LogUtil.d(data);
+    if (data != null) {
+      Application.isLogin = true;
+    }
+    return data == null ? null : LoginDataEntity().fromJson(data);
+  }
+
   //退出登录
   Future loginOut() async {
     var data = await httpUtils.get(Api.LOGIN_OUT);

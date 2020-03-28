@@ -190,14 +190,49 @@ class _LoginPagePage extends State<LoginPage> {
     });
   }
 
+  bool validInput() {
+    if (_nameController.text == null || _nameController.text == "") {
+      ToolUtils.showToast(msg: "用户名儿得填一个吧");
+      return false;
+    }
+    if (_pwdController.text == null || _pwdController.text == "") {
+      ToolUtils.showToast(msg: "密码得填一个吧");
+      return false;
+    }
+    if (_pwdController.text.length < 6) {
+      ToolUtils.showToast(msg: "密码长度太短了吧,兄嘚");
+      return false;
+    }
+    return true;
+  }
+
   //登录
   void login() async {
+    if (!validInput()) {
+      return;
+    }
     LoginDataEntity loginDataEntity = await dataUtils.login(_nameController.text, _pwdController.text, context);
-    dataUtils.setLoginState(true);
-    ToolUtils.showToast(msg: "登录成功");
-    Navigator.of(context).pop();
+    if (loginDataEntity == null || loginDataEntity.username == null || loginDataEntity.username == "") {
+      //ToolUtils.showToast(msg: "登录失败");
+    } else {
+      dataUtils.setLoginState(true);
+      ToolUtils.showToast(msg: "登录成功");
+      Navigator.of(context).pop();
+    }
   }
 
   //注册
-  void register() {}
+  void register() async {
+    if (!validInput()) {
+      return;
+    }
+    LoginDataEntity loginDataEntity = await dataUtils.register(_nameController.text, _pwdController.text, context);
+    if (loginDataEntity == null || loginDataEntity.username == null || loginDataEntity.username == "") {
+      //ToolUtils.showToast(msg: "注册失败");
+    } else {
+      dataUtils.setLoginState(true);
+      ToolUtils.showToast(msg: "登录成功");
+      Navigator.of(context).pop();
+    }
+  }
 }

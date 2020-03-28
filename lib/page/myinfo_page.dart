@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:wanandroidflutter/common/application.dart';
 import 'package:wanandroidflutter/constant/routes.dart';
+import 'package:wanandroidflutter/data/data_utils.dart';
 import 'package:wanandroidflutter/util/log_util.dart';
 
 ///我的
@@ -27,6 +28,10 @@ class _MyInfoPageState extends State<MyInfoPage> {
           child: Text('退出登录'),
           onPressed: () {
             LogUtil.d("跳转");
+            setState(() {
+              Application.isLogin = false;
+            });
+            loginOut();
           },
         ),
       ];
@@ -41,5 +46,9 @@ class _MyInfoPageState extends State<MyInfoPage> {
         ),
       ];
     }
+  }
+
+  void loginOut() async {
+    await dataUtils.loginOut();
   }
 }

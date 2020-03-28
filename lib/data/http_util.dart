@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:wanandroidflutter/constant/api.dart';
 import 'package:wanandroidflutter/util/log_util.dart';
+import 'package:wanandroidflutter/util/tool_utils.dart';
 
 /*
 通用格式
@@ -126,7 +127,7 @@ class HttpUtils {
         return response.data['data'];
       } else {
         String data = response.data["errorMsg"];
-        //ToolUtils.showToast(msg: data);
+        ToolUtils.showToast(msg: data);
         LogUtil.d("请求网络错误 : $data");
       }
 

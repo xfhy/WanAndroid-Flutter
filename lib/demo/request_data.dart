@@ -55,6 +55,12 @@ class RequestDemo extends StatelessWidget {
                     },
                   ),
                   RaisedButton(
+                    child: Text('注册'),
+                    onPressed: () {
+                      dataUtils.register("xxxxxxx415456465465qqqqq", "xxxxxxx", context);
+                    },
+                  ),
+                  RaisedButton(
                     child: Text('退出登录'),
                     onPressed: () {
                       dataUtils.loginOut();
