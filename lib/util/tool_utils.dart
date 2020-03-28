@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:wanandroidflutter/constant/AppColors.dart';
+import 'package:wanandroidflutter/constant/app_colors.dart';
 import 'package:wanandroidflutter/widget/stroke_widget.dart';
 
 /// 一些常用的工具类方法

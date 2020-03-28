@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:wanandroidflutter/common/application.dart';
-import 'package:wanandroidflutter/constant/AppColors.dart';
+import 'package:wanandroidflutter/constant/app_colors.dart';
 import 'package:wanandroidflutter/data/data_utils.dart';
 import 'package:wanandroidflutter/data/model/login_data_entity.dart';
 import 'package:wanandroidflutter/util/tool_utils.dart';

@@ -1,7 +1,7 @@
 import 'package:event_bus/event_bus.dart';
 import 'package:flutter/material.dart';
 import 'package:wanandroidflutter/common/application.dart';
-import 'package:wanandroidflutter/constant/AppColors.dart';
+import 'package:wanandroidflutter/constant/app_colors.dart';
 import 'package:wanandroidflutter/constant/routes.dart';
 import 'package:wanandroidflutter/page/tree_page.dart';
 

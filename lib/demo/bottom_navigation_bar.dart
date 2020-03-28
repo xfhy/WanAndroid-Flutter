@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:wanandroidflutter/constant/AppColors.dart';
+import 'package:wanandroidflutter/constant/app_colors.dart';
 
 class BottomNavigationBarWidget extends StatefulWidget {
   @override //一般是需要下划线开头,然后后面加一个State

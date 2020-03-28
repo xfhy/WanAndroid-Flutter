@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:wanandroidflutter/constant/AppColors.dart';
+import 'package:wanandroidflutter/constant/app_colors.dart';
 import 'package:wanandroidflutter/util/log_util.dart';
 
 ///专门用于刷新的列表page
