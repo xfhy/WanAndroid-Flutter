@@ -5,6 +5,10 @@ import 'package:flutter/material.dart';
 ///xfhy
 
 class SearchResultWidget extends StatefulWidget {
+  final String inputKey;
+
+  SearchResultWidget(this.inputKey);
+
   @override
   State createState() {
     return _SearchResultWidgetState();
@@ -14,8 +18,10 @@ class SearchResultWidget extends StatefulWidget {
 class _SearchResultWidgetState extends State<SearchResultWidget> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: Colors.blue,
+    return Scaffold(
+      body: Container(
+        color: Colors.blue,
+      ),
     );
   }
 }

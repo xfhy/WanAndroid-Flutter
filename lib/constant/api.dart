@@ -33,6 +33,8 @@ class Api {
   static const String KNOWLEDGE_ARTICLE_LIST = "article/list/%s/json";
   //搜索
   static const String SEARCH = "article/query/%s/json";
+  //热搜关键字
+  static const String SEARCH_HOT_KEY = "hotkey/json";
 
 
 }

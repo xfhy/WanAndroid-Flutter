@@ -98,6 +98,12 @@ class RequestDemo extends StatelessWidget {
                       dataUtils.search("控件", 0, context);
                     },
                   ),
+                  RaisedButton(
+                    child: Text('热搜关键词'),
+                    onPressed: () {
+                      dataUtils.getSearchHotKeys();
+                    },
+                  ),
                   const Text('C'),
                   const Text('D'),
                 ]),

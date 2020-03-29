@@ -82,6 +82,6 @@ class _SearchPageState extends State<SearchPage> {
   }
 
   Widget _buildContentBody() {
-    return inputContentEmpty ? HotSearchWidget() : SearchResultWidget();
+    return inputContentEmpty ? HotSearchWidget() : SearchResultWidget(_searchController.text);
   }
 }

@@ -6,6 +6,7 @@ import 'package:wanandroidflutter/constant/api.dart';
 import 'package:wanandroidflutter/constant/constants.dart';
 import 'package:wanandroidflutter/data/http_util.dart';
 import 'package:wanandroidflutter/data/model/banner_data.dart';
+import 'package:wanandroidflutter/data/model/hot_key_entity.dart';
 import 'package:wanandroidflutter/util/log_util.dart';
 import 'package:wanandroidflutter/util/shared_preferences.dart';
 
@@ -140,6 +141,12 @@ class DataUtils {
     var data =
         await httpUtils.post(sprintf(Api.SEARCH, [pageIndex]), formData: formData, isAddLoading: false, loadingText: "搜索中...", context: context);
     return data == null ? null : ArticleDataEntity().fromJson(data);
+  }
+
+  ///热搜关键词
+  Future<List<HotKeyEntity>> getSearchHotKeys() async {
+    List data = await httpUtils.get(Api.SEARCH_HOT_KEY);
+    return data == null ? null : data.map((item) => HotKeyEntity().fromJson(item)).toList();
   }
 
   //--------------sp--------------
