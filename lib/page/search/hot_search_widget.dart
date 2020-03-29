@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:wanandroidflutter/constant/app_colors.dart';
+import 'package:wanandroidflutter/constant/routes.dart';
 import 'package:wanandroidflutter/data/data_utils.dart';
 import 'package:wanandroidflutter/data/model/hot_key_entity.dart';
 import 'package:wanandroidflutter/util/log_util.dart';
@@ -78,6 +79,7 @@ class _HotSearchWidgetState extends State<HotSearchWidget> {
       ),
       onPressed: () {
         LogUtil.d("跳转搜索详情页");
+        Navigator.pushNamed(context, Routes.searchResultPage, arguments: null);
       },
     );
   }

@@ -92,6 +92,7 @@ class ToolUtils {
       title = "";
     }
     return AppBar(
+      backgroundColor: AppColors.colorPrimary,
       leading: IconButton(
         icon: Icon(
           Icons.arrow_back,
