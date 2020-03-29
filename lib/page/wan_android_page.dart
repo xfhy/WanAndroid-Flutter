@@ -32,7 +32,7 @@ class WanAndroidHomePage extends StatefulWidget {
 class _WanAndroidHomePageState extends State<WanAndroidHomePage> {
   var currentPage = 0;
   PageController _pageController;
-  final appBarTitles = ['首页', '发现', '我的'];
+  final appBarTitles = ['首页', '知识体系', '我的'];
 
   @override
   void initState() {

@@ -11,6 +11,7 @@ import 'package:wanandroidflutter/util/log_util.dart';
 import 'package:wanandroidflutter/util/shared_preferences.dart';
 
 import 'model/article_data_entity.dart';
+import 'model/knowledge_entity.dart';
 import 'model/login_data_entity.dart';
 
 ///数据获取帮助类
@@ -147,6 +148,12 @@ class DataUtils {
   Future<List<HotKeyEntity>> getSearchHotKeys() async {
     List data = await httpUtils.get(Api.SEARCH_HOT_KEY);
     return data == null ? null : data.map((item) => HotKeyEntity().fromJson(item)).toList();
+  }
+
+  ///知识体系
+  Future<List<KnowledgeEntity>> getKnowledgeSystem() async {
+    List data = await httpUtils.get(Api.KNOWLEDGE_SYSTEM);
+    return data == null ? null : data.map((item) => KnowledgeEntity().fromJson(item)).toList();
   }
 
   //--------------sp--------------

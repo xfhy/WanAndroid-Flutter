@@ -104,6 +104,12 @@ class RequestDemo extends StatelessWidget {
                       dataUtils.getSearchHotKeys();
                     },
                   ),
+                  RaisedButton(
+                    child: Text('知识体系'),
+                    onPressed: () {
+                      dataUtils.getKnowledgeSystem();
+                    },
+                  ),
                   const Text('C'),
                   const Text('D'),
                 ]),

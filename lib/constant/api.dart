@@ -29,6 +29,8 @@ class Api {
 
   //收藏的文章列表
   static const String COLLECT_ARTICLE_LIST = "lg/collect/list/%s/json";
+  //知识体系
+  static const String KNOWLEDGE_SYSTEM = "tree/json";
   //知识体系下面的文章
   static const String KNOWLEDGE_ARTICLE_LIST = "article/list/%s/json";
   //搜索

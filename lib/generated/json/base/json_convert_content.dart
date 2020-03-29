@@ -9,6 +9,8 @@ import 'package:wanandroidflutter/data/model/hot_key_entity.dart';
 import 'package:wanandroidflutter/generated/json/hot_key_entity_helper.dart';
 import 'package:wanandroidflutter/data/model/article_data_entity.dart';
 import 'package:wanandroidflutter/generated/json/article_data_entity_helper.dart';
+import 'package:wanandroidflutter/data/model/knowledge_entity.dart';
+import 'package:wanandroidflutter/generated/json/knowledge_entity_helper.dart';
 
 class JsonConvert<T> {
 	T fromJson(Map<String, dynamic> json) {
@@ -25,7 +27,9 @@ class JsonConvert<T> {
 			return hotKeyEntityFromJson(data as HotKeyEntity, json) as T;			case ArticleDataEntity:
 			return articleDataEntityFromJson(data as ArticleDataEntity, json) as T;			case ArticleData:
 			return articleDataFromJson(data as ArticleData, json) as T;			case ArticleTags:
-			return articleTagsFromJson(data as ArticleTags, json) as T;    }
+			return articleTagsFromJson(data as ArticleTags, json) as T;			case KnowledgeEntity:
+			return knowledgeEntityFromJson(data as KnowledgeEntity, json) as T;			case Knowledgechild:
+			return knowledgechildFromJson(data as Knowledgechild, json) as T;    }
     return data as T;
   }
 
@@ -35,7 +39,9 @@ class JsonConvert<T> {
 			return hotKeyEntityToJson(data as HotKeyEntity);			case ArticleDataEntity:
 			return articleDataEntityToJson(data as ArticleDataEntity);			case ArticleData:
 			return articleDataToJson(data as ArticleData);			case ArticleTags:
-			return articleTagsToJson(data as ArticleTags);    }
+			return articleTagsToJson(data as ArticleTags);			case KnowledgeEntity:
+			return knowledgeEntityToJson(data as KnowledgeEntity);			case Knowledgechild:
+			return knowledgechildToJson(data as Knowledgechild);    }
     return data as T;
   }
   //Go back to a single instance by type
@@ -45,7 +51,9 @@ class JsonConvert<T> {
 			return HotKeyEntity().fromJson(json);			case 'ArticleDataEntity':
 			return ArticleDataEntity().fromJson(json);			case 'ArticleData':
 			return ArticleData().fromJson(json);			case 'ArticleTags':
-			return ArticleTags().fromJson(json);    }
+			return ArticleTags().fromJson(json);			case 'KnowledgeEntity':
+			return KnowledgeEntity().fromJson(json);			case 'Knowledgechild':
+			return Knowledgechild().fromJson(json);    }
     return null;
   }
 
@@ -56,7 +64,9 @@ class JsonConvert<T> {
 			return List<HotKeyEntity>();			case 'ArticleDataEntity':
 			return List<ArticleDataEntity>();			case 'ArticleData':
 			return List<ArticleData>();			case 'ArticleTags':
-			return List<ArticleTags>();    }
+			return List<ArticleTags>();			case 'KnowledgeEntity':
+			return List<KnowledgeEntity>();			case 'Knowledgechild':
+			return List<Knowledgechild>();    }
     return null;
   }
 
