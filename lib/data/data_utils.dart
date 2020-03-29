@@ -134,6 +134,14 @@ class DataUtils {
     return data == null ? null : ArticleDataEntity().fromJson(data);
   }
 
+  //搜索
+  Future<ArticleDataEntity> search(String key, int pageIndex, BuildContext context) async {
+    FormData formData = FormData.fromMap({"k": key});
+    var data =
+        await httpUtils.post(sprintf(Api.SEARCH, [pageIndex]), formData: formData, isAddLoading: false, loadingText: "搜索中...", context: context);
+    return data == null ? null : ArticleDataEntity().fromJson(data);
+  }
+
   //--------------sp--------------
 
   //设置登录状态

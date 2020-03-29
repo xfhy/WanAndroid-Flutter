@@ -19,7 +19,7 @@ class RequestDemo extends StatelessWidget {
               sliver: new SliverList(
                 delegate: new SliverChildListDelegate(<Widget>[
                   RaisedButton(
-                    child: Text('获取文章'),
+                    child: Text('获取最新文章'),
                     onPressed: () {
                       dataUtils.getArticleData(0);
                     },
@@ -90,6 +90,12 @@ class RequestDemo extends StatelessWidget {
                     child: Text('请求知识体系'),
                     onPressed: () {
                       dataUtils.getKnowledgeArticleData(60, 0);
+                    },
+                  ),
+                  RaisedButton(
+                    child: Text('搜索'),
+                    onPressed: () {
+                      dataUtils.search("控件", 0, context);
                     },
                   ),
                   const Text('C'),

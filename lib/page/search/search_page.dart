@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:wanandroidflutter/constant/app_colors.dart';
-import 'package:wanandroidflutter/util/log_util.dart';
+import 'package:wanandroidflutter/page/search/hot_search_widget.dart';
+import 'package:wanandroidflutter/page/search/search_list_widget.dart';
 
 ///搜索页面
 ///2020年03月29日11:49:08
@@ -13,6 +14,7 @@ class SearchPage extends StatefulWidget {
 }
 
 class _SearchPageState extends State<SearchPage> {
+  bool inputContentEmpty = true;
   TextEditingController _searchController = TextEditingController();
 
   @override
@@ -23,7 +25,7 @@ class _SearchPageState extends State<SearchPage> {
         title: _buildSearchField(),
         actions: _buildAppBarActions(),
       ),
-      body: Container(),
+      body: _buildContentBody(),
     );
   }
 
@@ -49,6 +51,9 @@ class _SearchPageState extends State<SearchPage> {
   ///开始搜索
   void startSearch() {
     String inputContent = _searchController.text;
+    setState(() {
+      inputContentEmpty = (inputContent == null || inputContent == "");
+    });
   }
 
   List<Widget> _buildAppBarActions() {
@@ -74,5 +79,9 @@ class _SearchPageState extends State<SearchPage> {
         },
       ),
     ];
+  }
+
+  Widget _buildContentBody() {
+    return inputContentEmpty ? HotSearchWidget() : SearchResultWidget();
   }
 }
