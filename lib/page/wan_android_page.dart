@@ -10,18 +10,26 @@ import 'myinfo_page.dart';
 
 ///主页面
 
-class WanAndroidApp extends StatefulWidget {
+class WanAndroidApp extends StatelessWidget {
   WanAndroidApp() {
     //初始化路由
     Routes.init();
   }
 
-  //一般是需要下划线开头,然后后面加一个State
   @override
-  State createState() => _WanAndroidAppState();
+  Widget build(BuildContext context) {
+    return MaterialApp(routes: Routes.routes, home: WanAndroidHomePage());
+  } //一般是需要下划线开头,然后后面加一个State
 }
 
-class _WanAndroidAppState extends State<WanAndroidApp> {
+class WanAndroidHomePage extends StatefulWidget {
+  @override
+  State createState() {
+    return _WanAndroidHomePageState();
+  }
+}
+
+class _WanAndroidHomePageState extends State<WanAndroidHomePage> {
   var currentPage = 0;
   PageController _pageController;
   final appBarTitles = ['首页', '发现', '我的'];
@@ -65,6 +73,15 @@ class _WanAndroidAppState extends State<WanAndroidApp> {
             appBarTitles[currentPage],
             style: TextStyle(color: Colors.white),
           ),
+          actions: <Widget>[
+            IconButton(
+              icon: Icon(
+                Icons.search,
+                color: Colors.white,
+              ),
+              onPressed: _gotoSearchPage,
+            ),
+          ],
         ),
         body: getBody(),
       ),
@@ -123,5 +140,9 @@ class _WanAndroidAppState extends State<WanAndroidApp> {
         ),
       ],
     );
+  }
+
+  void _gotoSearchPage() {
+    Navigator.pushNamed(context, Routes.searchPage);
   }
 }
