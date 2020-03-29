@@ -115,6 +115,8 @@ class ToolUtils {
       centerTitle: true,
       //右边的action 按钮
       actions: actions == null ? <Widget>[] : actions,
+      //action 颜色
+      //actionsIconTheme: IconThemeData(color: Colors.white),
     );
   }
 
@@ -137,5 +139,4 @@ class ToolUtils {
       Navigator.of(context).pop();
     }
   }
-
 }

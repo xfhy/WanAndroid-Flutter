@@ -93,7 +93,8 @@ class _ArticleItemState extends State<ArticleItem> {
 
   ///文章 item 点击事件
   void _onClickArticleItem() {
-    RouteWebPageData pageData = new RouteWebPageData(id: widget.itemData.id, title: widget.itemData.title, url: widget.itemData.link);
+    RouteWebPageData pageData =
+        new RouteWebPageData(id: widget.itemData.id, title: widget.itemData.title, url: widget.itemData.link, collect: widget.itemData.collect);
     Navigator.pushNamed(context, Routes.webViewPage, arguments: pageData);
   }
 

@@ -35,6 +35,8 @@ dependencies:
   sprintf: ^4.0.2
   # SharedPreference
   shared_preferences: ^0.5.6+3
+  # 用系统浏览器打开url
+  url_launcher: ^5.4.2
   flutter:
     sdk: flutter
 
