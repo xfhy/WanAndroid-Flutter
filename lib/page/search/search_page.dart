@@ -64,6 +64,8 @@ class _SearchPageState extends State<SearchPage> {
           color: Colors.white,
         ),
         onPressed: () {
+          //收起软键盘
+          FocusScope.of(context).requestFocus(FocusNode());
           startSearch();
         },
       ),
@@ -74,6 +76,7 @@ class _SearchPageState extends State<SearchPage> {
         ),
         onPressed: () {
           setState(() {
+            inputContentEmpty = true;
             _searchController.clear();
           });
         },

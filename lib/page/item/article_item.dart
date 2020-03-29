@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:wanandroidflutter/constant/app_colors.dart';
 import 'package:wanandroidflutter/constant/routes.dart';
 import 'package:wanandroidflutter/data/data_utils.dart';
 import 'package:wanandroidflutter/data/model/article_data_entity.dart';
@@ -134,6 +135,7 @@ class _ArticleItemState extends State<ArticleItem> {
     //图标
     infoList.add(Icon(
       itemData.author == "" ? Icons.folder_shared : Icons.person,
+      color: AppColors.colorPrimary,
       size: 20.0,
     ));
 

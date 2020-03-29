@@ -15,8 +15,7 @@ class RefreshPage extends StatefulWidget {
   static const String STAGGERED_GRID_PAGE_TYPE = 'staggered_grid_page_type';
 
   // ExpansionPanelList
-  static const String EXPANSION_PANEL_LIST_PAGE_TYPE =
-      'expansion_panel_list_page_type';
+  static const String EXPANSION_PANEL_LIST_PAGE_TYPE = 'expansion_panel_list_page_type';
 
   ///模块item 的Widget
   final renderItem;
@@ -92,10 +91,7 @@ class _RefreshPageState extends State<RefreshPage> {
     _getMoreData();
     //判断是否滑动到了列表最底部 && 有更多数据 && 可加载更多
     _scrollController.addListener(() {
-      if ((_scrollController.position.pixels ==
-              _scrollController.position.maxScrollExtent) &&
-          _hasMore &&
-          widget.isCanLoadMore) {
+      if ((_scrollController.position.pixels == _scrollController.position.maxScrollExtent) && _hasMore && widget.isCanLoadMore) {
         _getMoreData();
       }
     });
@@ -188,9 +184,7 @@ class _RefreshPageState extends State<RefreshPage> {
       _pageIndex = listObj['pageIndex'];
       _pageTotal = listObj['total'];
       //判断是否还能加载更多 并且 判断pageNum是否为 1
-      _hasMore = ((widget.startIndex == 1)
-          ? _pageIndex <= _pageTotal
-          : _pageIndex < _pageTotal);
+      _hasMore = ((widget.startIndex == 1) ? _pageIndex <= _pageTotal : _pageIndex < _pageTotal);
       return listObj['list'];
     } else {
       //参数有问题  延迟2秒  返回空list
@@ -240,9 +234,7 @@ class _RefreshPageState extends State<RefreshPage> {
     if (!widget.isHaveHeader && index == items.length && items.length != 0) {
       ///如果不需要头部，并且数据不为0，当index等于数据长度时，渲染加载更多Item（因为index是从0开始）
       return _buildProgressIndicator();
-    } else if (widget.isHaveHeader &&
-        index == _getListCount() - 1 &&
-        items.length != 0) {
+    } else if (widget.isHaveHeader && index == _getListCount() - 1 && items.length != 0) {
       ///如果需要头部，并且数据不为0，当index等于实际渲染长度 - 1时，渲染加载更多Item（因为index是从0开始）
       return _buildProgressIndicator();
     } else if (widget.isHaveHeader && index == 0 && items.length != 0) {
@@ -264,8 +256,7 @@ class _RefreshPageState extends State<RefreshPage> {
       }
     } else {
       ///回调外部正常渲染Item，如果这里有需要，可以直接返回相对位置的index，如果有头部 index 减一 保持不会忽略 index = 0 的数据
-      return widget.renderItem(
-          index, items[widget.isHaveHeader ? index - 1 : index]);
+      return widget.renderItem(index, items[widget.isHaveHeader ? index - 1 : index]);
     }
   }
 
@@ -280,7 +271,10 @@ class _RefreshPageState extends State<RefreshPage> {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
-          Text("获取数据为空或页面加载失败！！"),
+          Text(
+            "获取数据为空或页面加载失败！！",
+            style: TextStyle(fontSize: 18.0),
+          ),
           RaisedButton(
             textColor: Colors.white,
             color: Theme.of(context).primaryColor,
@@ -363,8 +357,7 @@ class _RefreshPageState extends State<RefreshPage> {
               ],
             ),
             Padding(
-              child: Text('正在加载...',
-                  style: TextStyle(color: Colors.black54, fontSize: 15.0)),
+              child: Text('正在加载...', style: TextStyle(color: Colors.black54, fontSize: 15.0)),
               padding: EdgeInsets.all(15.0),
             ),
           ],

@@ -79,7 +79,7 @@ class _HotSearchWidgetState extends State<HotSearchWidget> {
       ),
       onPressed: () {
         LogUtil.d("跳转搜索详情页");
-        Navigator.pushNamed(context, Routes.searchResultPage, arguments: null);
+        Navigator.pushNamed(context, Routes.searchResultPage, arguments: text);
       },
     );
   }

@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:wanandroidflutter/data/data_utils.dart';
+import 'package:wanandroidflutter/data/model/article_data_entity.dart';
+import 'package:wanandroidflutter/page/item/article_item.dart';
+import 'package:wanandroidflutter/util/log_util.dart';
 import 'package:wanandroidflutter/util/tool_utils.dart';
+import 'package:wanandroidflutter/widget/refresh/refresh_page.dart';
 
 ///搜索结果列表
 ///2020年03月29日15:31:15
@@ -37,16 +42,50 @@ class _SearchResultWidgetState extends State<SearchResultWidget> {
     if (needBuildAppBar) {
       widget = Scaffold(
         appBar: ToolUtils.getCommonAppBar(context, key),
-        body: Container(
-          color: Colors.blue,
+        body: RefreshPage(
+          requestApi: getSearchKeyData,
+          renderItem: buildArticleItem,
         ),
       );
     } else {
-      widget = Container(
-        color: Colors.blue,
+      widget = RefreshPage(
+        requestApi: getSearchKeyData,
+        renderItem: buildArticleItem,
       );
     }
 
     return widget;
+  }
+
+  ///构建文章item
+  Widget buildArticleItem(int index, ArticleData itemData) {
+    return ArticleItem(
+      itemData,
+      isHomeShow: false,
+      isClickUser: false,
+    );
+  }
+
+  Future<Map> getSearchKeyData([Map<String, dynamic> params]) async {
+    var pageIndex = (params is Map) ? params['pageIndex'] : 0;
+    //组装一个json 方便刷新页page 那边取数据
+    Map<String, dynamic> result = {"list": [], 'total': 0, 'pageIndex': pageIndex};
+
+    //当前是展示作者的文章
+    await dataUtils.search(widget.inputKey, pageIndex, context).then((ArticleDataEntity articleDataEntity) {
+      if (articleDataEntity != null && articleDataEntity.datas != null) {
+        //页数+1
+        pageIndex++;
+        result = {
+          "list": articleDataEntity.datas,
+          'total': articleDataEntity.total,
+          'pageIndex': pageIndex,
+        };
+      }
+    }, onError: (e) {
+      LogUtil.d("发送错误 ${e.toString()}");
+    });
+
+    return result;
   }
 }
