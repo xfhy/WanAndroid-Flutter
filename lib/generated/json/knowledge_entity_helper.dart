@@ -2,9 +2,9 @@ import 'package:wanandroidflutter/data/model/knowledge_entity.dart';
 
 knowledgeEntityFromJson(KnowledgeEntity data, Map<String, dynamic> json) {
 	if (json['children'] != null) {
-		data.children = new List<Knowledgechild>();
+		data.children = new List<KnowledgeChild>();
 		(json['children'] as List).forEach((v) {
-			data.children.add(new Knowledgechild().fromJson(v));
+			data.children.add(new KnowledgeChild().fromJson(v));
 		});
 	}
 	if (json['courseId'] != null) {
@@ -46,7 +46,7 @@ Map<String, dynamic> knowledgeEntityToJson(KnowledgeEntity entity) {
 	return data;
 }
 
-knowledgechildFromJson(Knowledgechild data, Map<String, dynamic> json) {
+knowledgechildFromJson(KnowledgeChild data, Map<String, dynamic> json) {
 	if (json['children'] != null) {
 		data.children = new List<dynamic>();
 		data.children.addAll(json['children']);
@@ -75,7 +75,7 @@ knowledgechildFromJson(Knowledgechild data, Map<String, dynamic> json) {
 	return data;
 }
 
-Map<String, dynamic> knowledgechildToJson(Knowledgechild entity) {
+Map<String, dynamic> knowledgechildToJson(KnowledgeChild entity) {
 	final Map<String, dynamic> data = new Map<String, dynamic>();
 	if (entity.children != null) {
 		data['children'] =  [];

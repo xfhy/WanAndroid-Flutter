@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:wanandroidflutter/common/application.dart';
 import 'package:wanandroidflutter/constant/app_colors.dart';
 import 'package:wanandroidflutter/constant/routes.dart';
-import 'package:wanandroidflutter/page/tree_page.dart';
+import 'package:wanandroidflutter/page/knowledge_system_tree_page.dart';
 
 import 'home_list_page.dart';
 import 'myinfo_page.dart';
@@ -97,7 +97,7 @@ class _WanAndroidHomePageState extends State<WanAndroidHomePage> {
           child: PageView(
             children: <Widget>[
               HomeListPage(),
-              TreePage(),
+              KnowledgeSystemPage(),
               MyInfoPage(),
             ],
             //设置controller,可以控制PageView的当前页
