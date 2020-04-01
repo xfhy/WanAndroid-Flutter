@@ -5,6 +5,9 @@ import 'package:wanandroidflutter/constant/routes.dart';
 import 'package:wanandroidflutter/data/data_utils.dart';
 import 'package:wanandroidflutter/data/model/knowledge_entity.dart';
 
+import 'knowledge/knowledge_page.dart';
+import 'knowledge/knowledge_page_data.dart';
+
 ///知识体系 发现
 class KnowledgeSystemPage extends StatefulWidget {
   @override
@@ -52,12 +55,15 @@ class _KnowledgeSystemPageState extends State<KnowledgeSystemPage> with Automati
     if (knowledgeEntityList == null || knowledgeEntityList.length == 0) {
       return [
         Container(
+          height: MediaQuery.of(context).size.height,
           child: Center(
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                SpinKitFadingCircle(
+                SpinKitCubeGrid(
+                  size: 55.0,
                   color: AppColors.colorPrimary,
+                  duration: Duration(milliseconds: 800),
                 ),
                 Padding(
                   padding: EdgeInsets.only(left: 10.0),
@@ -126,8 +132,9 @@ class _KnowledgeSystemPageState extends State<KnowledgeSystemPage> with Automati
         style: TextStyle(color: Colors.white),
       ),
       onPressed: () {
-        //todo xfhy 将cid 传入知识体系列表页
-        //Navigator.pushNamed(context, Routes.searchResultPage, arguments: text);
+        KnowledgePageData knowledgePageData =
+            KnowledgePageData(KnowledgePage.KNOWLEDGE_ARTICLE_PAGE_TYPE, title: knowledgeChild.name, cid: knowledgeChild.id);
+        Navigator.pushNamed(context, Routes.knowledgePage, arguments: knowledgePageData);
       },
     );
   }
