@@ -103,6 +103,7 @@ class DataUtils {
     //LogUtil.d(data);
     //return data == null ? null : LoginDataEntity().fromJson(data);
     Application.isLogin = false;
+    dataUtils.setLoginUserName("");
     return data;
   }
 
@@ -166,5 +167,15 @@ class DataUtils {
   ///当前是否已经登录
   Future<bool> isLogin() {
     return spUtil.getBool(SharedPreferencesKeys.LOGIN_STATE_KEY);
+  }
+
+  //设置登录用户名
+  void setLoginUserName(String username) {
+    spUtil.putString(SharedPreferencesKeys.LOGIN_USERNAME_KEY, username);
+  }
+
+  //获取登录用户名
+  Future<dynamic> getUserName() {
+    return spUtil.getString(SharedPreferencesKeys.LOGIN_USERNAME_KEY);
   }
 }

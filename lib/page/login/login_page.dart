@@ -202,6 +202,7 @@ class _LoginPagePage extends State<LoginPage> {
       //ToolUtils.showToast(msg: "登录失败");
     } else {
       dataUtils.setLoginState(true);
+      dataUtils.setLoginUserName(loginDataEntity.username);
       ToolUtils.showToast(msg: "登录成功");
       Navigator.of(context).pop();
     }

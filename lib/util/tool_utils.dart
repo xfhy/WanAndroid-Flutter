@@ -140,4 +140,10 @@ class ToolUtils {
       Navigator.of(context).pop();
     }
   }
+
+  //获取本地资源图片
+  static String getImage(String imageName,{String format:'png'}){
+    return "images/$imageName.$format";
+  }
+
 }
