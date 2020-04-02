@@ -27,7 +27,7 @@ class SpUtil {
     return prefs.get(key);
   }
 
-  getString(String key) async {
+  Future<String> getString(String key) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     var strData = prefs.getString(key);
     return strData == null ? "" : strData;

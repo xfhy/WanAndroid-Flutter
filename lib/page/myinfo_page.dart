@@ -34,6 +34,19 @@ class _MyInfoPageState extends State<MyInfoPage> {
       buildAvatar(),
       //登录按钮
       buildLoginBtn(),
+      RaisedButton(
+        child: Text('退出登录'),
+        onPressed: () {
+          LogUtil.d("跳转");
+          setState(() {
+            Application.isLogin = false;
+            dataUtils.setLoginState(false);
+            dataUtils.clearUserName();
+            userName = null;
+          });
+          loginOut();
+        },
+      ),
     ];
   }
 
@@ -89,7 +102,7 @@ class _MyInfoPageState extends State<MyInfoPage> {
     return RaisedButton(
       color: AppColors.colorPrimary,
       child: Text(
-        userName == null ? "请登录" : userName,
+        (userName == null || userName == "") ? "请登录" : userName,
         style: TextStyle(
           color: Colors.white,
         ),
@@ -102,9 +115,12 @@ class _MyInfoPageState extends State<MyInfoPage> {
     );
   }
 
-  void getUserName() {
-    dataUtils.getUserName().then((value) {
-      userName = value;
+  void getUserName() async {
+    await dataUtils.getUserName().then((value) {
+      setState(() {
+        LogUtil.d("userName = $userName");
+        userName = value;
+      });
     });
   }
 }

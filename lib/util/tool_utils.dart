@@ -137,13 +137,12 @@ class ToolUtils {
   ///隐藏loading dialog
   static void disMissLoadingDialog(bool isAddLoading, BuildContext context) {
     if (isAddLoading) {
-      Navigator.of(context).pop();
+      Navigator.of(context, rootNavigator: true).pop();
     }
   }
 
   //获取本地资源图片
-  static String getImage(String imageName,{String format:'png'}){
+  static String getImage(String imageName, {String format: 'png'}) {
     return "images/$imageName.$format";
   }
-
 }

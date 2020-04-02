@@ -160,22 +160,27 @@ class DataUtils {
   //--------------sp--------------
 
   //设置登录状态
-  void setLoginState(bool isLogin) {
-    spUtil.putBool(SharedPreferencesKeys.LOGIN_STATE_KEY, isLogin);
+  Future<bool> setLoginState(bool isLogin) async {
+    return await spUtil.putBool(SharedPreferencesKeys.LOGIN_STATE_KEY, isLogin);
   }
 
   ///当前是否已经登录
-  Future<bool> isLogin() {
-    return spUtil.getBool(SharedPreferencesKeys.LOGIN_STATE_KEY);
+  Future<bool> isLogin() async {
+    return await spUtil.getBool(SharedPreferencesKeys.LOGIN_STATE_KEY);
   }
 
   //设置登录用户名
-  void setLoginUserName(String username) {
-    spUtil.putString(SharedPreferencesKeys.LOGIN_USERNAME_KEY, username);
+  Future<bool> setLoginUserName(String username) async {
+    return await spUtil.putString(SharedPreferencesKeys.LOGIN_USERNAME_KEY, username);
+  }
+
+  ///清除用户名信息
+  Future<bool> clearUserName() async {
+    return await spUtil.remove(SharedPreferencesKeys.LOGIN_USERNAME_KEY);
   }
 
   //获取登录用户名
-  Future<dynamic> getUserName() {
-    return spUtil.getString(SharedPreferencesKeys.LOGIN_USERNAME_KEY);
+  Future<String> getUserName() async {
+    return await spUtil.getString(SharedPreferencesKeys.LOGIN_USERNAME_KEY);
   }
 }
