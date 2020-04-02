@@ -4,6 +4,7 @@ import 'package:wanandroidflutter/common/application.dart';
 import 'package:wanandroidflutter/constant/app_colors.dart';
 import 'package:wanandroidflutter/data/data_utils.dart';
 import 'package:wanandroidflutter/data/model/login_data_entity.dart';
+import 'package:wanandroidflutter/page/login/login_event.dart';
 import 'package:wanandroidflutter/util/tool_utils.dart';
 
 ///登录界面
@@ -197,12 +198,18 @@ class _LoginPagePage extends State<LoginPage> {
     if (!validInput()) {
       return;
     }
+    //收起软键盘
+    FocusScope.of(context).requestFocus(FocusNode());
     LoginDataEntity loginDataEntity = await dataUtils.login(_nameController.text, _pwdController.text, context);
     if (loginDataEntity == null || loginDataEntity.username == null || loginDataEntity.username == "") {
       //ToolUtils.showToast(msg: "登录失败");
     } else {
       await dataUtils.setLoginState(true);
       await dataUtils.setLoginUserName(loginDataEntity.username);
+
+      //发送事件
+      Application.eventBus.fire(LoginEvent(loginDataEntity.username));
+
       ToolUtils.showToast(msg: "登录成功");
       Navigator.of(context).pop();
     }
@@ -213,6 +220,8 @@ class _LoginPagePage extends State<LoginPage> {
     if (!validInput()) {
       return;
     }
+    //收起软键盘
+    FocusScope.of(context).requestFocus(FocusNode());
     LoginDataEntity loginDataEntity = await dataUtils.register(_nameController.text, _pwdController.text, context);
     if (loginDataEntity == null || loginDataEntity.username == null || loginDataEntity.username == "") {
       //ToolUtils.showToast(msg: "注册失败");

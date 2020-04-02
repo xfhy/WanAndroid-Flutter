@@ -6,6 +6,8 @@ import 'package:wanandroidflutter/data/data_utils.dart';
 import 'package:wanandroidflutter/util/log_util.dart';
 import 'package:wanandroidflutter/util/tool_utils.dart';
 
+import 'login/login_event.dart';
+
 ///我的
 class MyInfoPage extends StatefulWidget {
   @override
@@ -19,6 +21,15 @@ class _MyInfoPageState extends State<MyInfoPage> {
   void initState() {
     super.initState();
     getUserName();
+
+    //监听事件总线上数据变化
+    Application.eventBus.on<LoginEvent>().listen((event) {
+      if (mounted) {
+        setState(() {
+          userName = event.username;
+        });
+      }
+    });
   }
 
   @override
@@ -34,19 +45,16 @@ class _MyInfoPageState extends State<MyInfoPage> {
       buildAvatar(),
       //登录按钮
       buildLoginBtn(),
-      RaisedButton(
-        child: Text('退出登录'),
-        onPressed: () {
-          LogUtil.d("跳转");
-          setState(() {
-            Application.isLogin = false;
-            dataUtils.setLoginState(false);
-            dataUtils.clearUserName();
-            userName = null;
-          });
-          loginOut();
-        },
-      ),
+      //我的收藏
+      buildMyCollect(),
+      //每日一问
+      buildEveryDayQuestion(),
+      //清楚缓存
+      buildClearCache(),
+      //关于我们
+      buildAboutUs(),
+      //退出登录
+      buildLoginOut(),
     ];
   }
 
@@ -75,10 +83,6 @@ class _MyInfoPageState extends State<MyInfoPage> {
         ),
       ];
     }
-  }
-
-  void loginOut() async {
-    await dataUtils.loginOut();
   }
 
   ///构建头像
@@ -115,6 +119,85 @@ class _MyInfoPageState extends State<MyInfoPage> {
     );
   }
 
+  //我的收藏
+  Widget buildMyCollect() {
+    return buildCommonItem(Icons.favorite, "我的收藏", () {
+      //需要登录
+      LogUtil.d("跳转我的收藏");
+    });
+  }
+
+  //构建每日一问
+  Widget buildEveryDayQuestion() {
+    return buildCommonItem(Icons.question_answer, "每日一问", () {
+      //需要登录
+      LogUtil.d("跳转每日一问");
+    });
+  }
+
+  //构建清除缓存
+  Widget buildClearCache() {
+    return buildCommonItem(Icons.clear, "清除缓存", () {
+      //需要登录
+      LogUtil.d("展示对话框  是否确认清除");
+    });
+  }
+
+  //构建关于我们
+  Widget buildAboutUs() {
+    return buildCommonItem(Icons.supervised_user_circle, "关于我们", () {
+      //需要登录
+      LogUtil.d("跳转关于我们");
+    });
+  }
+
+  //构建退出
+  Widget buildLoginOut() {
+    return buildCommonItem(Icons.exit_to_app, "退出登录", () {
+      //需要登录
+      LogUtil.d("退出登录");
+      loginOut();
+      setState(() {
+        Application.isLogin = false;
+        dataUtils.setLoginState(false);
+        dataUtils.clearUserName();
+        userName = null;
+      });
+    });
+  }
+
+  //构建通用item
+  Widget buildCommonItem(IconData iconData, String itemContent, Function clickListener) {
+    return InkWell(
+      child: Padding(
+        padding: EdgeInsets.only(left: 15.0, right: 15.0, bottom: 20.0, top: 20.0),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            Icon(iconData),
+            Expanded(
+              child: Padding(
+                padding: EdgeInsets.only(left: 20.0),
+                child: Text(
+                  itemContent,
+                  style: TextStyle(color: Colors.black),
+                ),
+              ),
+            ),
+            Icon(Icons.chevron_right),
+          ],
+        ),
+      ),
+      onTap: clickListener,
+    );
+  }
+
+  //退出登录
+  void loginOut() async {
+    await dataUtils.loginOut();
+  }
+
+  //获取用户名
   void getUserName() async {
     await dataUtils.getUserName().then((value) {
       setState(() {
