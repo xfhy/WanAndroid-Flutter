@@ -124,6 +124,11 @@ class _MyInfoPageState extends State<MyInfoPage> {
     return buildCommonItem(Icons.favorite, "我的收藏", () {
       //需要登录
       LogUtil.d("跳转我的收藏");
+      if (Application.isLogin) {
+        Navigator.pushNamed(context, Routes.favoritePage);
+      } else {
+        Navigator.pushNamed(context, Routes.loginPage);
+      }
     });
   }
 

@@ -145,4 +145,14 @@ class ToolUtils {
   static String getImage(String imageName, {String format: 'png'}) {
     return "images/$imageName.$format";
   }
+
+  ///获取非空字符串  如果是null,则返回""
+  static String getNotEmptyStr(String text) {
+    return text == null ? "" : text;
+  }
+
+  ///获取非空bool  如果是null,则返回false
+  static bool getNotNullBool(bool value) {
+    return value == null ? false : value;
+  }
 }

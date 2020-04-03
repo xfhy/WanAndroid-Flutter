@@ -71,8 +71,8 @@ class _ArticleItemState extends State<ArticleItem> {
               width: 70,
               child: Center(
                 child: IconButton(
-                  icon: Icon(widget.itemData.collect ? Icons.favorite : Icons.favorite_border),
-                  color: widget.itemData.collect ? Colors.deepOrange : Colors.grey,
+                  icon: Icon(ToolUtils.getNotNullBool(widget.itemData.collect) ? Icons.favorite : Icons.favorite_border),
+                  color: ToolUtils.getNotNullBool(widget.itemData.collect) ? Colors.deepOrange : Colors.grey,
                   onPressed: collectArticle,
                 ),
               ),
@@ -107,11 +107,11 @@ class _ArticleItemState extends State<ArticleItem> {
       tagsList.add(ToolUtils.buildStrokeTagWidget('置顶', Colors.redAccent));
     }
     //加入 新 标签
-    if (widget.itemData.fresh) {
+    if (widget.itemData.fresh != null && widget.itemData.fresh) {
       tagsList.add(ToolUtils.buildStrokeTagWidget('新', Colors.redAccent));
     }
     //加入 tag 标签
-    if (widget.itemData.tags.length > 0) {
+    if (widget.itemData.tags != null && widget.itemData.tags.length > 0) {
       tagsList.addAll(widget.itemData.tags.map((item) => ToolUtils.buildStrokeTagWidget(item.name, Colors.green)).toList());
     }
     if (tagsList.length > 0) {
@@ -148,7 +148,7 @@ class _ArticleItemState extends State<ArticleItem> {
               left: 5.0,
               right: 6.0),
           child: Text(
-            itemData.author == "" ? itemData.shareUser : itemData.author,
+            ToolUtils.isNullOrEmpty(itemData.author) ? ToolUtils.getNotEmptyStr(itemData.shareUser) : itemData.author,
             //只展示一行
             maxLines: 1,
             //超出 展示...
@@ -182,7 +182,7 @@ class _ArticleItemState extends State<ArticleItem> {
         padding: EdgeInsets.only(right: 10),
         child: GestureDetector(
           child: Text(
-            itemData.superChapterName + " / " + itemData.chapterName,
+            ToolUtils.getNotEmptyStr(itemData.superChapterName) + " / " + ToolUtils.getNotEmptyStr(itemData.chapterName),
             maxLines: 1,
             style: TextStyle(
               color: widget.isHomeShow ? Colors.blue : Colors.black54,

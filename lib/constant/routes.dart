@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:wanandroidflutter/page/favorite/my_favorite_page.dart';
 import 'package:wanandroidflutter/page/knowledge/knowledge_page.dart';
 import 'package:wanandroidflutter/page/login/login_page.dart';
 import 'package:wanandroidflutter/page/search/search_list_widget.dart';
@@ -23,8 +24,12 @@ class Routes {
 
   //搜索页面
   static String searchPage = '/search_page';
+
   //搜索结果页面  真正在干搜索这事儿的页面
   static String searchResultPage = '/search_result_page';
+
+  //收藏界面
+  static String favoritePage = '/favorite_page';
 
   static Map<String, WidgetBuilder> routes = {};
 
@@ -34,5 +39,6 @@ class Routes {
     routes[loginPage] = (context) => LoginPage();
     routes[searchPage] = (context) => SearchPage();
     routes[searchResultPage] = (context) => SearchResultWidget();
+    routes[favoritePage] = (context) => FavoritePage();
   }
 }

@@ -56,8 +56,8 @@ class _WebViewPageState extends State<WebViewPage> {
     AppBar appBar = ToolUtils.getCommonAppBar(context, ToolUtils.signToStr(pageData.title), fontSize: 14.0, actions: [
       IconButton(
         icon: Icon(
-          pageData.collect ? Icons.favorite : Icons.favorite_border,
-          color: pageData.collect ? Colors.red : Colors.white,
+          ToolUtils.getNotNullBool(pageData.collect) ? Icons.favorite : Icons.favorite_border,
+          color: ToolUtils.getNotNullBool(pageData.collect) ? Colors.red : Colors.white,
         ),
         onPressed: _collectArticle,
       ),
@@ -95,7 +95,7 @@ class _WebViewPageState extends State<WebViewPage> {
     //已登录
 
     //之前已收藏  那么就是取消收藏
-    if (pageData.collect) {
+    if (ToolUtils.getNotNullBool(pageData.collect)) {
       await dataUtils.cancelCollectArticle(pageData.id);
       setState(() {
         pageData.collect = false;
