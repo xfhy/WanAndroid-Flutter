@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:wanandroidflutter/page/about/about_page.dart';
 import 'package:wanandroidflutter/page/favorite/my_favorite_page.dart';
 import 'package:wanandroidflutter/page/knowledge/knowledge_page.dart';
 import 'package:wanandroidflutter/page/login/login_page.dart';
@@ -35,6 +36,9 @@ class Routes {
   //每日一问
   static String questionPage = '/question_page';
 
+  //关于
+  static String aboutPage = '/about_page';
+
   static Map<String, WidgetBuilder> routes = {};
 
   static void init() {
@@ -45,5 +49,6 @@ class Routes {
     routes[searchResultPage] = (context) => SearchResultWidget();
     routes[favoritePage] = (context) => FavoritePage();
     routes[questionPage] = (context) => QuestionPage();
+    routes[aboutPage] = (context) => AboutUsPage();
   }
 }

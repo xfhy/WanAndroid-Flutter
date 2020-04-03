@@ -51,7 +51,7 @@ class _MyInfoPageState extends State<MyInfoPage> {
       buildEveryDayQuestion(),
       //清楚缓存
       buildClearCache(),
-      //关于我们
+      //关于作者
       buildAboutUs(),
       //退出登录
       buildLoginOut(),
@@ -157,11 +157,12 @@ class _MyInfoPageState extends State<MyInfoPage> {
     });
   }
 
-  //构建关于我们
+  //构建关于作者
   Widget buildAboutUs() {
-    return buildCommonItem(Icons.supervised_user_circle, "关于我们", () {
+    return buildCommonItem(Icons.supervised_user_circle, "关于作者", () {
       //需要登录
-      LogUtil.d("跳转关于我们");
+      LogUtil.d("跳转关于作者");
+      Navigator.pushNamed(context, Routes.aboutPage);
     });
   }
 
