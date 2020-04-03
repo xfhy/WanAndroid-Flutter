@@ -1,8 +1,12 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:wanandroidflutter/constant/app_colors.dart';
 import 'package:wanandroidflutter/widget/stroke_widget.dart';
+import 'package:cookie_jar/cookie_jar.dart';
 
 /// 一些常用的工具类方法
 class ToolUtils {
@@ -154,5 +158,49 @@ class ToolUtils {
   ///获取非空bool  如果是null,则返回false
   static bool getNotNullBool(bool value) {
     return value == null ? false : value;
+  }
+
+  ///清除 cookie 缓存
+  static void clearCookie() async {
+    Directory documentsDir = await getApplicationDocumentsDirectory();
+    String documentsPath = documentsDir.path;
+    var dir = Directory("$documentsPath/coolies");
+    await dir.create();
+    PersistCookieJar(dir: dir.path).deleteAll();
+  }
+
+  //Dialog 封装
+  static void showAlertDialog(BuildContext context, String contentText,
+      {Function confirmCallback, Function dismissCallback, String confirmText = ""}) async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: true, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          content: Text(contentText),
+          actions: <Widget>[
+            FlatButton(
+              child: Text('手滑了'),
+              onPressed: () {
+                if (dismissCallback != null) {
+                  dismissCallback();
+                }
+                Navigator.of(context).pop();
+              },
+            ),
+            FlatButton(
+              child: Text(confirmText == "" ? '注销' : confirmText),
+              onPressed: () {
+                if (confirmCallback != null) {
+                  confirmCallback();
+                }
+                Navigator.of(context).pop();
+              },
+            )
+          ],
+          elevation: 20, //阴影
+        );
+      },
+    );
   }
 }

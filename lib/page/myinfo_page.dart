@@ -150,7 +150,10 @@ class _MyInfoPageState extends State<MyInfoPage> {
     return buildCommonItem(Icons.clear, "清除缓存", () {
       //需要登录
       LogUtil.d("展示对话框  是否确认清除");
-      ToolUtils.showToast(msg: "清除成功");
+      ToolUtils.showAlertDialog(context, "确定清除缓存么?", confirmText: "确定", confirmCallback: () {
+        ToolUtils.clearCookie();
+        ToolUtils.showToast(msg: "清除成功");
+      });
     });
   }
 
@@ -167,12 +170,17 @@ class _MyInfoPageState extends State<MyInfoPage> {
     return buildCommonItem(Icons.exit_to_app, "退出登录", () {
       //需要登录
       LogUtil.d("退出登录");
-      loginOut();
-      setState(() {
-        Application.isLogin = false;
-        dataUtils.setLoginState(false);
-        dataUtils.clearUserName();
-        userName = null;
+
+      ToolUtils.showAlertDialog(context, "确定要退出登录么?", confirmText: "确定", confirmCallback: () {
+        ToolUtils.clearCookie();
+        loginOut();
+        setState(() {
+          Application.isLogin = false;
+          dataUtils.setLoginState(false);
+          dataUtils.clearUserName();
+          userName = null;
+          ToolUtils.showToast(msg: "退出登录成功");
+        });
       });
     });
   }
