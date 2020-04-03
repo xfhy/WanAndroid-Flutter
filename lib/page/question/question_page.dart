@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 import 'package:wanandroidflutter/data/data_utils.dart';
 import 'package:wanandroidflutter/data/model/article_data_entity.dart';
@@ -6,23 +7,23 @@ import 'package:wanandroidflutter/util/log_util.dart';
 import 'package:wanandroidflutter/util/tool_utils.dart';
 import 'package:wanandroidflutter/widget/refresh/refresh_page.dart';
 
-///2020年04月03日20:20:41
-///我的收藏
+///2020年04月03日20:50:08
+///每日一问
 ///xfhy
 
-class FavoritePage extends StatefulWidget {
+class QuestionPage extends StatefulWidget {
   @override
   State createState() {
-    return _FavoritePageState();
+    return _QuestionPageState();
   }
 }
 
-class _FavoritePageState extends State<FavoritePage> with AutomaticKeepAliveClientMixin {
+class _QuestionPageState extends State<QuestionPage> with AutomaticKeepAliveClientMixin {
   @override
   Widget build(BuildContext context) {
     super.build(context);
     return Scaffold(
-      appBar: ToolUtils.getCommonAppBar(context, "我的收藏"),
+      appBar: ToolUtils.getCommonAppBar(context, "每日一问"),
       body: RefreshPage(
         requestApi: _getArticleData,
         renderItem: _buildArticleItem,
@@ -36,12 +37,8 @@ class _FavoritePageState extends State<FavoritePage> with AutomaticKeepAliveClie
     Map<String, dynamic> result = {"list": [], 'total': 0, 'pageIndex': pageIndex};
 
     //当前是展示作者的文章
-    await dataUtils.getCollectArticles(pageIndex).then((ArticleDataEntity articleDataEntity) {
+    await dataUtils.getQuestionArticles(pageIndex).then((ArticleDataEntity articleDataEntity) {
       if (articleDataEntity != null && articleDataEntity.datas != null) {
-        //收藏 都是收藏了的,,但是返回的是null
-        for (ArticleData articleData in articleDataEntity.datas) {
-          articleData.collect = true;
-        }
         //页数+1
         pageIndex++;
         result = {
@@ -71,3 +68,5 @@ class _FavoritePageState extends State<FavoritePage> with AutomaticKeepAliveClie
     return true;
   }
 }
+
+

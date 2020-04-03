@@ -212,7 +212,7 @@ class _ArticleItemState extends State<ArticleItem> {
     //已登录
 
     //之前已收藏  那么就是取消收藏
-    if (widget.itemData.collect) {
+    if (ToolUtils.getNotNullBool(widget.itemData.collect)) {
       await dataUtils.cancelCollectArticle(widget.itemData.id);
       setState(() {
         widget.itemData.collect = false;

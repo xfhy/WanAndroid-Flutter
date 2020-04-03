@@ -130,6 +130,14 @@ class DataUtils {
     return data == null ? null : ArticleDataEntity().fromJson(data);
   }
 
+  ///每日一问文章列表
+  Future<ArticleDataEntity> getQuestionArticles(int pageIndex) async {
+    var data = await httpUtils.get(sprintf(Api.QUESTION_ARTICLE_LIST, [pageIndex]));
+    //LogUtil.d(data);
+    return data == null ? null : ArticleDataEntity().fromJson(data);
+  }
+
+
   //知识体系下的文章
   Future<ArticleDataEntity> getKnowledgeArticleData(int cid, int pageIndex) async {
     Map<String, dynamic> params = {"cid": cid};

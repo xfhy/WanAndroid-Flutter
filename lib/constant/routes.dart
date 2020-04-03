@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:wanandroidflutter/page/favorite/my_favorite_page.dart';
 import 'package:wanandroidflutter/page/knowledge/knowledge_page.dart';
 import 'package:wanandroidflutter/page/login/login_page.dart';
+import 'package:wanandroidflutter/page/question/question_page.dart';
 import 'package:wanandroidflutter/page/search/search_list_widget.dart';
 import 'package:wanandroidflutter/page/search/search_page.dart';
 import 'package:wanandroidflutter/page/webview/web_view_page.dart';
@@ -31,6 +32,9 @@ class Routes {
   //收藏界面
   static String favoritePage = '/favorite_page';
 
+  //每日一问
+  static String questionPage = '/question_page';
+
   static Map<String, WidgetBuilder> routes = {};
 
   static void init() {
@@ -40,5 +44,6 @@ class Routes {
     routes[searchPage] = (context) => SearchPage();
     routes[searchResultPage] = (context) => SearchResultWidget();
     routes[favoritePage] = (context) => FavoritePage();
+    routes[questionPage] = (context) => QuestionPage();
   }
 }

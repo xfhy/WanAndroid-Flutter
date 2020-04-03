@@ -137,6 +137,11 @@ class _MyInfoPageState extends State<MyInfoPage> {
     return buildCommonItem(Icons.question_answer, "每日一问", () {
       //需要登录
       LogUtil.d("跳转每日一问");
+      if (Application.isLogin) {
+        Navigator.pushNamed(context, Routes.questionPage);
+      } else {
+        Navigator.pushNamed(context, Routes.loginPage);
+      }
     });
   }
 
@@ -145,6 +150,7 @@ class _MyInfoPageState extends State<MyInfoPage> {
     return buildCommonItem(Icons.clear, "清除缓存", () {
       //需要登录
       LogUtil.d("展示对话框  是否确认清除");
+      ToolUtils.showToast(msg: "清除成功");
     });
   }
 
