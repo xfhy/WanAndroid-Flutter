@@ -3,11 +3,23 @@
 [![image](https://img.shields.io/badge/author-xfhy-orange.svg)](https://github.com/xfhy)
 [![image](https://img.shields.io/badge/CSDN-潇风寒月-orange.svg)](https://blog.csdn.net/xfhy_)
 
-### WanAndroid-Flutter
+## 1. WanAndroid-Flutter
 
 Flutter版本 WanAndroid客户端,适合Flutter入门学习.该项目是我在学习Flutter过程中写的.
 
-### 项目截图
+## 2. 技术点
+
+- 封装 上拉加载,下拉刷新
+- dio进行网络请求,统一封装get,post
+- 封装banner
+- Future
+- 路由,跳转界面
+- 事件总线 event_bus
+- toast
+- SharedPreference
+- ....
+
+## 3. 项目截图
 
 <p>
 <img src="./pic/image1.png" width="225" height="400"/>
@@ -21,3 +33,193 @@ Flutter版本 WanAndroid客户端,适合Flutter入门学习.该项目是我在�
 release 版本[试玩地址](http://d.alphaqr.com/3s7z)
 
 ![](https://s1.ax1x.com/2020/04/05/Gr1I0I.png)
+
+## 4. 遇到的一些问题
+
+### 4.1 引入第三方库
+
+1. 首先去[官网package](https://pub.dev/packages)搜索.
+2. 找到相应插件,点进详情,切换到Installing tab,然后在pubspec.yaml中引入该插件.
+3. 在本项目控制台,输入flutter pub get. 即引入三方库完成.
+
+### 4.2 loading
+
+当页面正在loading时,需要一个Widget来占位,不然Widget为空要报错.
+
+### 4.3 运行在iOS上
+
+1. 首先得安装Xcode(7.8G)
+2. 然后安装 cocoapods `sudo gem install cocoapods`
+3. 然后在ios工程下,执行`pod install`,引入那些依赖
+4. 然后用AS打开ios项目里面的Info.plist,点击右上角的用Xcode打开.
+5. 编辑Podfile,将顶部的`platform :ios, '9.0'` 注释放开
+6. 运行到模拟器上.
+
+### 4.4 如何快速解析json
+
+> Flutter不支持运行时反射,所以没有像Gson这样自动解析JSON的库来降低解析成本.在Flutter中解析JSON需要完全手动进行操作,麻烦.
+
+可以在AS上装FlutterJsonBeanFactory这个插件,然后右键New->JsonToDartBeanAction,输入文件名和json数据.即可自动生成bean对象,和它所对应的解析代码.
+
+原理是它生成了一个JsonConvert,然后这里面可以根据运行时type去选择应该解析哪一个类对象.
+然后bean类在声明的时候是混入了JsonConvert的,可以直接使用JsonConvert里面的方法,完美.
+
+### 4.5 Flutter ScrollView (滚动视图)
+
+ScrollView是一个带有滚动的视图组件,它本身由三部分组成
+
+- Scrollable - 它监听各种用户手势并实现滚动的交互设计。
+- Viewport - 它通过在滚动视图内仅显示一部分小部件来实现滚动的可视化设计。
+- Slider - 它们是可以组合以创建各种滚动效果的小部件，如列表，网格和扩展标题。
+
+Scroll是一个抽象类,通常使用CustomScrollView
+
+```
+CustomScrollView(
+    shrinkWrap: true,
+    // 内容
+    slivers: <Widget>[
+        new SliverPadding(
+            padding: const EdgeInsets.all(20.0),
+            sliver: new SliverList(
+                delegate: new SliverChildListDelegate(
+                    <Widget>[
+                        const Text('A'),
+                        const Text('B'),
+                        const Text('C'),
+                        const Text('D'),
+                    ],
+                ),
+            ),
+        ),
+    ],
+)
+```
+
+### 4.6 处理Text超出问题
+
+可以放Row或Column中,用Expanded包起来,然后用maxLines控制行数,用`overflow:
+TextOverflow.ellipsis,`控制超出部分的展示.
+
+### 4.7 让一个ListView支持下拉刷新
+
+非常简单,
+使用官方自带的RefreshIndicator即可,将listview放child,然后实现一个_pullToRefresh下拉刷新时调用的方法(做下拉刷新的逻辑).
+
+```
+RefreshIndicator(
+      child: listView,
+      onRefresh: _pullToRefresh,
+    );
+
+Future<void> _pullToRefresh() {
+    loadData();
+    //这里Feature不能返回 null
+    return Future(() => LogUtil.d("lalala"));
+  }
+```
+
+### 4.8 获取屏幕宽度,高度
+
+```
+MediaQuery.of(context).size.width,
+MediaQuery.of(context).size.height
+```
+
+### 4.9 封装通用标题栏
+
+标题栏,每个界面都需要,所以封装一个,取需.
+
+```dart
+///get通用状态栏
+static AppBar getCommonAppBar(BuildContext context, String title, {double fontSize, List<Widget> actions}) {
+if (title == null) {
+  title = "";
+}
+return AppBar(
+  leading: IconButton(
+    icon: Icon(
+      Icons.arrow_back,
+      color: Colors.white,
+    ),
+    //点击返回
+    onPressed: () {
+      if (context != null) {
+        Navigator.pop(context);
+      }
+    },
+  ),
+  title: Text(
+    title,
+    style: TextStyle(
+      color: Colors.white,
+      fontSize: fontSize == null ? 18.0 : fontSize,
+    ),
+  ),
+  //标题栏居中
+  centerTitle: true,
+  //右边的action 按钮
+  actions: actions == null ? <Widget>[] : actions,
+);
+}
+```
+
+### 4.10 格式化String
+
+dart中格式化String,需要引入三方库`sprintf`,使用方式如下:
+
+```dart
+sprintf("lg/collect/%s/json", [15615]);
+```
+
+### 4.11 获取Android/iOS本地目录
+
+需要引入三方库`path_provider`,用于查找文件系统上的常用位置,支持Android和iOS.免得去写一原生代码,这个三方库帮我们封装好了.
+
+```dart
+Directory tempDir = await getTemporaryDirectory();
+String tempPath = tempDir.path;
+
+Directory appDocDir = await getApplicationDocumentsDirectory();
+String appDocPath = appDocDir.path;
+```
+
+### 4.12 展示一个Dialog
+
+以下方法是dart的material包下面的方法.
+
+```dart
+//展示对话框
+showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (_) {
+          return SpinKitFadingCircle(
+            color: AppColors.colorPrimary,
+          );
+        });
+
+//取消对话框
+Navigator.of(context).pop();
+```
+
+### 4.13 间距的简单方式
+
+可以用Padding和margin来实现.其实还有一种方式,可以在Column和Row中快速增加一段间距,利用SizedBox,类似Android中的Space
+
+```dart
+SizedBox(width: 10.0),
+```
+
+### 4.14 收起软键盘
+
+有时候需要在点击某些按钮时收起软键盘
+```dart
+FocusScope.of(context).requestFocus(FocusNode());
+```
+
+### 4.15 让ListView的item点击时有水波纹效果
+
+用InkWell把Item包起来
+
+
