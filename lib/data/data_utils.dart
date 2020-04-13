@@ -123,6 +123,14 @@ class DataUtils {
     return data;
   }
 
+  //取消收藏文章  我的收藏页
+  Future cancelCollectArticleForMyFavoritePage(int articleId, String originId) async {
+    FormData formData = FormData.fromMap({"originId": originId});
+    var data = await httpUtils.post(sprintf(Api.CANCEL_COLLECT_ARTICLE_FOR_MY_FAV, [articleId]), formData: formData);
+    //LogUtil.d(data);
+    return data;
+  }
+
   ///获取收藏文章列表
   Future<ArticleDataEntity> getCollectArticles(int pageIndex) async {
     var data = await httpUtils.get(sprintf(Api.COLLECT_ARTICLE_LIST, [pageIndex]));
@@ -136,7 +144,6 @@ class DataUtils {
     //LogUtil.d(data);
     return data == null ? null : ArticleDataEntity().fromJson(data);
   }
-
 
   //知识体系下的文章
   Future<ArticleDataEntity> getKnowledgeArticleData(int cid, int pageIndex) async {

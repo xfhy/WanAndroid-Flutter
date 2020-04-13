@@ -94,6 +94,9 @@ articleDataFromJson(ArticleData data, Map<String, dynamic> json) {
 	if (json['origin'] != null) {
 		data.origin = json['origin']?.toString();
 	}
+	if (json['originId'] != null) {
+		data.origin = json['originId']?.toString();
+	}
 	if (json['prefix'] != null) {
 		data.prefix = json['prefix']?.toString();
 	}
@@ -161,6 +164,7 @@ Map<String, dynamic> articleDataToJson(ArticleData entity) {
 	data['niceDate'] = entity.niceDate;
 	data['niceShareDate'] = entity.niceShareDate;
 	data['origin'] = entity.origin;
+	data['originId'] = entity.originId;
 	data['prefix'] = entity.prefix;
 	data['projectLink'] = entity.projectLink;
 	data['publishTime'] = entity.publishTime;

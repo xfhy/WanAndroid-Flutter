@@ -63,6 +63,7 @@ class _FavoritePageState extends State<FavoritePage> with AutomaticKeepAliveClie
       itemData,
       isHomeShow: false,
       isClickUser: false,
+      isMyFavoritePage: true,
     );
   }
 

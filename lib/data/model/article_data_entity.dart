@@ -30,6 +30,7 @@ class ArticleData with JsonConvert<ArticleData> {
   String niceDate;
   String niceShareDate;
   String origin;
+  String originId;
   String prefix;
   String projectLink;
   int publishTime;

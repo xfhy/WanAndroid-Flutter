@@ -22,7 +22,16 @@ class ArticleItem extends StatefulWidget {
   ///是否可以点击作者,跳转作者的文章
   final bool isClickUser;
 
-  ArticleItem(this.itemData, {Key key, this.isHomeShow = true, this.isClickUser = true}) : super(key: key);
+  //是否为我的收藏页  调用取消收藏的API不同
+  final bool isMyFavoritePage;
+
+  ArticleItem(
+    this.itemData, {
+    Key key,
+    this.isHomeShow = true,
+    this.isClickUser = true,
+    this.isMyFavoritePage = false,
+  }) : super(key: key);
 
   @override
   State createState() {
@@ -213,7 +222,12 @@ class _ArticleItemState extends State<ArticleItem> {
 
     //之前已收藏  那么就是取消收藏
     if (ToolUtils.getNotNullBool(widget.itemData.collect)) {
-      await dataUtils.cancelCollectArticle(widget.itemData.id);
+      //这里区分一下  在我的收藏页调用取消收藏的接口 不一样
+      if (widget.isMyFavoritePage) {
+        await dataUtils.cancelCollectArticleForMyFavoritePage(widget.itemData.id, widget.itemData.originId == null ? "-1" : widget.itemData.originId);
+      } else {
+        await dataUtils.cancelCollectArticle(widget.itemData.id);
+      }
       setState(() {
         widget.itemData.collect = false;
       });
