@@ -43,9 +43,9 @@ android {
     signingConfigs {
         release {
             keyAlias "xfhy"
-            keyPassword "111111"
+            keyPassword "11111111"
             storeFile file("../mykey.jks")
-            storePassword "111111"
+            storePassword "11111111"
         }
     }
 
